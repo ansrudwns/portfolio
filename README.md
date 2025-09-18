@@ -1,4 +1,4 @@
-# AI Developer Protfolio
+# AI Developer Portfolio
 
 인공지능, 데이터분석, 임베디드 개발 전문가
 
