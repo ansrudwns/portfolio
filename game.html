@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>반응속도 테스트 게임</title>
+  <style>
+    :root{
+      --bg:#0f1226; --panel:#171a33; --accent:#7c4dff; --ok:#21c07a; --warn:#ffb020; --bad:#ff4d6d; --muted:#9aa1b2;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Pretendard,Apple SD Gothic Neo,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#0c0f22,#111538 35%,#0f1226); color:#e9ecf1; min-height:100svh; display:flex; align-items:center; justify-content:center;}
+    .wrap{width:min(980px,92vw);}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.08); box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); border-radius:22px; overflow:hidden}
+    header{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 22px; border-bottom:1px solid rgba(255,255,255,.06)}
+    header h1{font-size:20px; margin:0; letter-spacing:.3px}
+    .pill{display:inline-flex; align-items:center; gap:8px; background:rgba(124,77,255,.15); color:#cfb8ff; border:1px solid rgba(124,77,255,.45); padding:6px 10px; border-radius:999px; font-size:12px}
+    .controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+    .controls > *{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#e9ecf1; padding:10px 12px; border-radius:12px; font-size:14px}
+    select{appearance:none}
+    button.primary{background:linear-gradient(180deg,var(--accent),#6236ff); border:none; padding:10px 14px; font-weight:600}
+    button.secondary{background:rgba(255,255,255,.06);}
+    button:disabled{opacity:.5; cursor:not-allowed}
+
+    .stage{position:relative; height:360px; display:grid; place-items:center; user-select:none; cursor:pointer}
+    .stage .msg{font-size:28px; text-align:center; line-height:1.35}
+    .stage .sub{margin-top:10px; font-size:14px; color:var(--muted)}
+    .stage.ready{background:#162030}
+    .stage.wait{background:#2a2436}
+    .stage.go{background:#093a2e}
+    .stage.false{background:#3a0f1f}
+
+    .grid{display:grid; grid-template-columns:1.2fr .8fr; gap:16px; padding:16px}
+    @media (max-width:860px){.grid{grid-template-columns:1fr}}
+
+    .panel{background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px}
+    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+    .stat{background:rgba(0,0,0,.2); border:1px solid rgba(255,255,255,.06); padding:12px; border-radius:14px; text-align:center}
+    .stat h3{margin:0; font-size:13px; color:#b6bccb; font-weight:500}
+    .stat p{margin:6px 0 0; font-size:22px; font-weight:700}
+
+    .list{display:flex; flex-direction:column; gap:8px; max-height:210px; overflow:auto; scrollbar-width:thin}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); font-size:12px}
+
+    .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
+
+    .footer{padding:12px 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; border-top:1px solid rgba(255,255,255,.06)}
+    .hint{color:#b7bfd0; font-size:12px}
+    .k{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; background:rgba(255,255,255,.08); padding:3px 6px; border-radius:6px; border:1px solid rgba(255,255,255,.15)}
+  </style>
+</head>
+<body>
+  <div class="wrap card" id="app">
+    <header>
+      <h1>⚡ 반응속도 테스트</h1>
+      <span class="pill">SPA • No libs • LocalStorage</span>
+      <div class="controls">
+        <label class="chip">라운드
+          <select id="rounds">
+            <option value="3">3</option>
+            <option value="5" selected>5</option>
+            <option value="7">7</option>
+            <option value="10">10</option>
+          </select>
+        </label>
+        <label class="chip">난이도
+          <select id="mode">
+            <option value="normal" selected>보통</option>
+            <option value="hard">어려움</option>
+            <option value="pro">프로</option>
+          </select>
+        </label>
+        <button class="secondary" id="resetBtn" title="결과 초기화">초기화</button>
+        <button class="primary" id="startBtn">시작</button>
+      </div>
+    </header>
+
+    <div class="stage ready" id="stage" tabindex="0" aria-label="테스트 영역">
+      <div class="msg" id="msg">버튼을 누르거나 무대(초록) 클릭/스페이스바로 반응하세요
+        <div class="sub">시작을 누르면 무작위 지연 후 "지금!"이 뜹니다. 너무 빨리 클릭하면 실패 처리됩니다.</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <div class="row" style="margin-bottom:8px">
+          <strong>라운드 기록</strong>
+          <span id="roundInfo" class="hint">0 / 0</span>
+        </div>
+        <div class="list" id="history"></div>
+      </div>
+
+      <div class="panel">
+        <strong>통계</strong>
+        <div class="stats" style="margin-top:10px">
+          <div class="stat"><h3>평균</h3><p id="avg">– ms</p></div>
+          <div class="stat"><h3>최고</h3><p id="best">– ms</p></div>
+          <div class="stat"><h3>실패</h3><p id="fails">0</p></div>
+        </div>
+        <div style="margin-top:12px" class="hint">개인 최고: <span id="pb">– ms</span></div>
+        <div style="margin-top:8px" class="hint">로컬 리더보드</div>
+        <div class="list" id="leader"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="hint">조작법: <span class="k">Space</span> 또는 스테이지 클릭 = 반응 • <span class="k">Enter</span> = 시작/다음 • <span class="k">R</span> = 초기화</div>
+      <div class="hint">난이도 설명 — 보통: 700–2000ms, 어려움: 1200–3500ms (랜덤 추가 유혹), 프로: 2000–5500ms (멘탈 테스트)</div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const el = (id) => document.getElementById(id);
+  const stage = el('stage');
+  const msg = el('msg');
+  const startBtn = el('startBtn');
+  const resetBtn = el('resetBtn');
+  const roundsSel = el('rounds');
+  const modeSel = el('mode');
+  const history = el('history');
+  const roundInfo = el('roundInfo');
+  const avgEl = el('avg');
+  const bestEl = el('best');
+  const failsEl = el('fails');
+  const pbEl = el('pb');
+  const leader = el('leader');
+
+  // --- State ---
+  const S = { idle:'idle', waiting:'waiting', go:'go', false:'false' };
+  let state = S.idle;
+  let config = { total: Number(roundsSel.value), mode: modeSel.value };
+  let timer = null, startedAt = 0; // timestamps
+  let results = []; // each: {ms, fail:boolean}
+  let falseStarts = 0;
+
+  // --- Local storage helpers ---
+  const LS_KEY = 'rt_leaderboard_v2';
+  const readLB = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)||'[]'); } catch { return []; } };
+  const writeLB = (arr) => localStorage.setItem(LS_KEY, JSON.stringify(arr.slice(0, 20)));
+
+  function fmt(n){ return Number.isFinite(n) ? Math.round(n) + ' ms' : '– ms'; }
+  function mean(nums){ return nums.length ? nums.reduce((a,b)=>a+b,0)/nums.length : NaN; }
+  function pickDelay(mode){
+    if(mode==='normal') return 700 + Math.random()*1300; // 0.7–2.0s
+    if(mode==='hard'){
+      // add a tempting early flicker chance
+      const base = 900 + Math.random()*1800; // 0.9–2.7s
+      return base + (Math.random()<0.35? 600+Math.random()*900 : 0);
+    }
+    // pro: long and evil
+    return 1600 + Math.random()*3900; // 1.6–5.5s
+  }
+
+  function setState(next){
+    state = next;
+    stage.classList.remove('ready','wait','go','false');
+    if(next===S.idle){
+      stage.classList.add('ready');
+      msg.innerHTML = '준비 완료. <strong>시작</strong>을 누르세요.' + hint();
+    } else if(next===S.waiting){
+      stage.classList.add('wait');
+      msg.innerHTML = '대기… <br><span class="sub">초록색으로 바뀌면 바로 반응!</span>';
+    } else if(next===S.go){
+      stage.classList.add('go');
+      msg.innerHTML = '<strong>지금!</strong><div class="sub">클릭 또는 스페이스바</div>';
+    } else if(next===S.false){
+      stage.classList.add('false');
+      msg.innerHTML = '너무 빨랐어요 🥲<div class="sub">신호 전 클릭은 실패로 기록됩니다</div>';
+    }
+  }
+
+  function hint(){ return '<div class="sub">(Space/클릭으로 반응, Enter로 다음 라운드)</div>'; }
+
+  function updatePanels(){
+    roundInfo.textContent = `${Math.min(results.length, config.total)} / ${config.total}`;
+    // history
+    history.innerHTML = '';
+    results.forEach((r, i) => {
+      const div = document.createElement('div');
+      div.className = 'row';
+      div.innerHTML = `<span class="chip">#${i+1}</span>` +
+        (r.fail ? `<span class="chip" style="border-color:rgba(255,77,109,.5); background:rgba(255,77,109,.1); color:#ff9db0">실패</span>`
+                : `<span class="chip" style="border-color:rgba(33,192,122,.5); background:rgba(33,192,122,.1); color:#9af0cd">${Math.round(r.ms)} ms</span>`);
+      history.appendChild(div);
+    });
+
+    const valids = results.filter(r=>!r.fail).map(r=>r.ms);
+    avgEl.textContent = fmt(mean(valids));
+    bestEl.textContent = fmt(Math.min(...valids));
+    failsEl.textContent = String(falseStarts);
+
+    const lb = readLB();
+    pbEl.textContent = lb.length? (lb[0].best+' ms') : '– ms';
+    leader.innerHTML = '';
+    lb.forEach((e,idx)=>{
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `<span class="chip">${idx+1}위</span><span class="chip">최고 ${e.best} ms</span><span class="chip">평균 ${e.avg} ms</span><span class="chip">${e.rounds}R</span><span class="chip">${new Date(e.ts).toLocaleString()}</span>`;
+      leader.appendChild(row);
+    });
+  }
+
+  function startRound(){
+    if(results.length >= config.total){
+      // series finished
+      finalize();
+      return;
+    }
+    setState(S.waiting);
+    clearTimeout(timer);
+    const delay = pickDelay(config.mode);
+    timer = setTimeout(()=>{
+      setState(S.go);
+      startedAt = performance.now();
+    }, delay);
+  }
+
+  function finalize(){
+    // compute stats, save to leaderboard
+    const valids = results.filter(r=>!r.fail).map(r=>Math.round(r.ms));
+    const best = valids.length ? Math.min(...valids) : null;
+    const avg = valids.length ? Math.round(mean(valids)) : null;
+    const entry = { best: best??'–', avg: avg??'–', rounds: config.total, fails: falseStarts, ts: Date.now() };
+    const lb = readLB();
+    if(best!==null){
+      // insert sorted by best ascending
+      lb.push(entry);
+      lb.sort((a,b)=> (a.best??99999) - (b.best??99999) || (a.avg??99999) - (b.avg??99999));
+      writeLB(lb);
+    }
+    updatePanels();
+    setState(S.idle);
+    msg.innerHTML = `세트 완료! <br>평균 <strong>${fmt(avg)}</strong> • 최고 <strong>${fmt(best)}</strong>` + hint();
+  }
+
+  function onReact(){
+    if(state===S.waiting){
+      // false start
+      clearTimeout(timer);
+      falseStarts++;
+      results.push({ms:0, fail:true});
+      setState(S.false);
+      updatePanels();
+    } else if(state===S.go){
+      const rt = performance.now() - startedAt;
+      results.push({ms:rt, fail:false});
+      updatePanels();
+      setState(S.idle);
+      msg.innerHTML = `기록: <strong>${Math.round(rt)} ms</strong><div class="sub">Enter로 다음 라운드 • Space로도 가능</div>`;
+    }
+  }
+
+  // --- Event wiring ---
+  startBtn.addEventListener('click', ()=>{
+    // reset between sets
+    if(results.length===0 || results.length>=config.total){
+      results = []; falseStarts = 0; updatePanels();
+    }
+    startRound();
+  });
+  resetBtn.addEventListener('click', ()=>{ results = []; falseStarts = 0; updatePanels(); setState(S.idle); });
+
+  stage.addEventListener('pointerdown', (e)=>{
+    if(e.pointerType==='touch'){ stage.setPointerCapture(e.pointerId); }
+    onReact();
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.code==='Space'){ e.preventDefault(); onReact(); }
+    else if(e.code==='Enter'){ e.preventDefault(); if(state===S.idle) startRound(); }
+    else if(e.key==='r' || e.key==='R'){ resetBtn.click(); }
+  });
+
+  roundsSel.addEventListener('change', ()=>{ config.total = Number(roundsSel.value); updatePanels(); });
+  modeSel.addEventListener('change', ()=>{ config.mode = modeSel.value; });
+
+  // First paint
+  updatePanels();
+  setState(S.idle);
+})();
+</script>
+</body>
+</html>
