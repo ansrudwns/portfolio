@@ -1,359 +1,369 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>포트폴리오 | AI · 임베디드 개발</title>
-  <meta name="description" content="인공지능 및 임베디드 시스템 전문 포트폴리오. 프로젝트, 연구, 기술 스택, 연락처." />
-  <meta name="author" content="Your Name" />
-  <!-- Open Graph -->
-  <meta property="og:title" content="AI · 임베디드 포트폴리오" />
-  <meta property="og:description" content="인공지능과 임베디드의 교차점에서 문제를 해결합니다." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://your-domain.github.io/" />
-  <meta property="og:image" content="https://your-domain.github.io/og-image.png" />
-  <!-- PWA-friendly theme color -->
-  <meta name="theme-color" content="#0f172a" />
-  <link rel="icon" href="favicon.ico" />
-  <!-- Minimal, dependency-free styles -->
-  <style>
-    :root{
-      --bg:#0b1020; --bg-soft:#0f172a; --text:#e5e7eb; --muted:#94a3b8; --brand:#22d3ee; --accent:#a78bfa; --card:#111827; --border:#1f2937;
-      --shadow:0 10px 25px rgba(0,0,0,.35);
-    }
-    [data-theme="light"]{ --bg:#f8fafc; --bg-soft:#eef2ff; --text:#0f172a; --muted:#475569; --brand:#0ea5e9; --accent:#7c3aed; --card:#ffffff; --border:#e2e8f0; --shadow:0 10px 25px rgba(2,6,23,.08); }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--text); background:linear-gradient(180deg,var(--bg),var(--bg-soft));}
-    a{color:var(--brand); text-decoration:none}
-    a:hover{text-decoration:underline}
-    .container{max-width:1100px;margin:0 auto;padding:24px}
-    header{position:sticky;top:0;backdrop-filter:saturate(1.3) blur(12px); background:color-mix(in lab, var(--bg-soft) 70%, transparent); border-bottom:1px solid var(--border); z-index:50}
-    nav{display:flex;align-items:center;gap:16px;justify-content:space-between}
-    .nav-links{display:flex;gap:18px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--border);border-radius:14px;background:color-mix(in srgb,var(--card) 88%, transparent); box-shadow:var(--shadow); transition:.2s}
-    .btn:hover{transform:translateY(-1px)}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
-    .brand-logo{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--accent)); color:#0b1020; font-weight:900}
-    /* Hero */
-    .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center;padding:48px 0}
-    .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:8px 0 12px}
-    .kicker{font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-    .hero .card{padding:20px;border:1px solid var(--border);background:radial-gradient(1200px 400px at 10% -10%, color-mix(in srgb,var(--brand) 18%, transparent), transparent 45%), var(--card); border-radius:18px; box-shadow:var(--shadow)}
-    .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-    .pill{display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border:1px solid var(--border);border-radius:999px;background:color-mix(in srgb,var(--card) 88%, transparent)}
-    /* Sections */
-    section{padding:42px 0;border-top:1px dashed var(--border)}
-    h2{font-size:clamp(22px,3.2vw,30px);margin:0 0 16px}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
-    .col-4{grid-column:span 4}
-    .col-6{grid-column:span 6}
-    .col-8{grid-column:span 8}
-    .card{padding:16px;border:1px solid var(--border);background:var(--card);border-radius:16px;box-shadow:var(--shadow)}
-    .badge{font-size:12px;padding:2px 8px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
-    .muted{color:var(--muted)}
-    .stack{display:flex;flex-wrap:wrap;gap:8px}
-    .project{display:flex;flex-direction:column;gap:10px}
-    .project h3{margin:0}
-    .project .meta{display:flex;gap:8px;flex-wrap:wrap}
-    .project .actions{display:flex;gap:10px;flex-wrap:wrap}
-    .skills-list{columns:2;column-gap:28px}
-    .skills-list li{break-inside:avoid;padding:6px 0;border-bottom:1px dashed var(--border)}
-    .timeline{position:relative;margin-left:8px}
-    .timeline::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--border)}
-    .timeline-item{position:relative;padding-left:20px;margin:12px 0}
-    .timeline-item::marker{content:""}
-    .dot{position:absolute;left:-1px;top:4px;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 10%, transparent)}
-    .footer{padding:40px 0;color:var(--muted)}
-    /* Responsive */
-    @media (max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .col-8,.col-6,.col-4{grid-column:span 12}
-      .skills-list{columns:1}
-    }
-  </style>
-  <script>
-    // Theme toggle (persist in localStorage)
-    const applyTheme = t => document.documentElement.setAttribute('data-theme', t);
-    const saved = localStorage.getItem('theme');
-    if(saved){ applyTheme(saved); }
-    function toggleTheme(){
-      const cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      applyTheme(cur); localStorage.setItem('theme', cur);
-    }
-    // Simple project filter
-    function filterProjects(tag){
-      document.querySelectorAll('.project').forEach(card=>{
-        const ok = tag==='all' || card.dataset.tags.split(',').includes(tag);
-        card.style.display = ok ? '' : 'none';
-      });
-      document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));
-      document.querySelector(`[data-filter="${tag}"]`).classList.add('active');
-    }
-    document.addEventListener('DOMContentLoaded',()=>{
-      filterProjects('all');
-      // Hash-based routing for sections
-      if(location.hash){
-        const el = document.querySelector(location.hash); if(el) el.scrollIntoView({behavior:'smooth'});
-      }
-    });
-  </script>
-  <style>
-    /* tiny style just for active filter state (placed after for priority) */
-    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-    .filters .btn.active{outline:2px solid var(--brand)}
-    .contact{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    @media (max-width:700px){.contact{grid-template-columns:1fr}}
-    .footnote{font-size:12px}
-    code.inline{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding:2px 6px; border-radius:8px; border:1px solid var(--border); background:color-mix(in srgb,var(--card) 88%, transparent)}
-  </style>
-  <!-- JSON-LD Schema (Person + WebSite) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Your Name",
-    "url": "https://your-domain.github.io/",
-    "jobTitle": "AI & Embedded Systems Engineer",
-    "sameAs": [
-      "https://github.com/your-id",
-      "https://www.linkedin.com/in/your-id"
-    ]
-  }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문경준 | AI & 임베디드 포트폴리오</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif; /* 글씨체 변경 */
+            background-color: #030712; /* 더 어두운 배경색 (회색 계열) */
+            color: #D1D5DB; /* 기본 텍스트 색상 (밝은 회색) */
+        }
+        .section-title {
+            @apply text-3xl md:text-4xl font-bold text-center mb-12 text-white;
+        }
+        .glass-effect {
+            background: rgba(55, 65, 81, 0.5); /* 살짝 더 밝은 반투명 배경 (회색) */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <div class="container">
-      <nav>
-        <div class="brand">
-          <span class="brand-logo">Æ</span>
-          <span>AI · Embedded</span>
+<body class="bg-gray-950 text-gray-300">
+
+    <!-- Header & Navigation -->
+    <header class="bg-gray-900/70 backdrop-blur-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">MUN</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="hover:text-white transition-colors duration-300">소개</a>
+                <a href="#skills" class="hover:text-white transition-colors duration-300">기술 스택</a>
+                <a href="#projects" class="hover:text-white transition-colors duration-300">프로젝트</a>
+                <a href="#contact" class="hover:text-white transition-colors duration-300">연락처</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
         </div>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#research">Research</a>
-          <a href="#contact">Contact</a>
-          <button class="btn" onclick="toggleTheme()" aria-label="Toggle theme">🌓 테마</button>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#about" class="block py-2">소개</a>
+            <a href="#skills" class="block py-2">기술 스택</a>
+            <a href="#projects" class="block py-2">프로젝트</a>
+            <a href="#contact" class="block py-2">연락처</a>
         </div>
-      </nav>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center">
+            <div class="text-center md:text-left w-full">
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-2">
+                    Code That Moves
+                </h1>
+                <p class="text-2xl md:text-3xl text-gray-300 mb-4">AI & Embedded Developer</p>
+                <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto md:mx-0">
+                    소프트웨어의 논리와 하드웨어의 물리적 움직임을 연결하여<br class="hidden md:block">
+                    혁신적인 솔루션을 만듭니다.
+                </p>
+                <a href="#projects" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-3 px-8 rounded-full transition-all duration-300 inline-block transform hover:scale-105">
+                    PROJECT
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20">
+            <h2 class="section-title">소개 (ABOUT ME)</h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/3">
+                    <img src="https://placehold.co/400x400/1F2937/E5E7EB?text=Profile\nPhoto" alt="프로필 사진" class="rounded-full shadow-lg mx-auto">
+                </div>
+                <div class="w-full md:w-2/3 text-lg text-gray-300">
+                    <p class="mb-4">
+                        안녕하세요, 개발자 <span class="whitespace-nowrap text-white">문경준</span>입니다. 저는 아이디어가 단순히 화면 속에 머무는 것이 아니라, 현실 세계에서 직접 만지고 상호작용할 수 있는 형태로 구현될 때 가장 큰 보람을 느낍니다. 이 열정이 저를 소프트웨어의 논리와 하드웨어의 물리적 움직임을 연결하는 AI & 임베디드 개발자의 길로 이끌었습니다.
+                    </p>
+                    <p class="mb-4">
+                        특히, 한정된 자원을 가진 엣지 디바이스에 최적화된 AI 모델을 올려, 전력 소모는 최소화하면서도 즉각적인 반응성을 구현하는 데 강점이 있습니다. 이는 스마트 팩토리의 결함 탐지부터 자율주행 로봇의 눈이 되기까지, 기술이 필요한 곳에 지능을 부여하는 핵심적인 과정이라고 믿습니다.
+                    </p>
+                    <p>
+                        이론과 현실의 간극을 메우며, 코드 한 줄이 실질적인 움직임으로 변환되는 순간을 만들어나갑니다. 기술을 통해 더 스마트하고 효율적인 세상을 만드는 여정에 함께하고 싶습니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <h2 class="section-title">기술 스택 (SKILLS)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- AI Skills -->
+                <div class="glass-effect p-8">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i data-lucide="brain-circuit" class="w-10 h-10 text-gray-200"></i>
+                        <h3 class="text-2xl font-bold text-white">Artificial Intelligence</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Python, TensorFlow, PyTorch</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Computer Vision (OpenCV)</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> TinyML, Edge AI</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Data Preprocessing & Analysis</li>
+                    </ul>
+                </div>
+                <!-- Embedded Skills -->
+                <div class="glass-effect p-8">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i data-lucide="cpu" class="w-10 h-10 text-gray-200"></i>
+                        <h3 class="text-2xl font-bold text-white">Embedded Systems</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> C, C++</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> ARM Cortex-M (STM32)</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> RTOS, FreeRTOS</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> I2C, SPI, UART, CAN</li>
+                    </ul>
+                </div>
+                <!-- Tools & Others -->
+                <div class="glass-effect p-8">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i data-lucide="wrench" class="w-10 h-10 text-gray-200"></i>
+                        <h3 class="text-2xl font-bold text-white">Tools & Others</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Git, GitHub</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Docker</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Linux, Bash Scripting</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> PCB Design (KiCad)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20">
+            <h2 class="section-title">프로젝트 (PROJECTS)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="glass-effect overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/111827/D1D5DB?text=Project+1" alt="프로젝트 1 이미지" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-white">엣지 AI 기반 스마트 팩토리 결함 탐지기</h3>
+                        <p class="text-gray-400 mb-4 text-sm">
+                            카메라로 생산 라인을 실시간 모니터링하고, 경량화된 CNN 모델을 MCU에 탑재하여 제품 결함을 즉시 감지하는 시스템입니다.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">TensorFlow Lite</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">STM32</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">OpenCV</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">C++</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-gray-300 hover:text-white hover:underline flex items-center gap-1"><i data-lucide="github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="glass-effect overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/111827/D1D5DB?text=Project+2" alt="프로젝트 2 이미지" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-white">RTOS 기반 자율주행 로봇 제어 시스템</h3>
+                        <p class="text-gray-400 mb-4 text-sm">
+                            FreeRTOS를 사용하여 다중 센서(LiDAR, IMU) 데이터를 실시간으로 처리하고 모터를 정밀 제어하는 자율주행 로봇 플랫폼입니다.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">FreeRTOS</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">C</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">CAN</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">SLAM</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-gray-300 hover:text-white hover:underline flex items-center gap-1"><i data-lucide="github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="glass-effect overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/111827/D1D5DB?text=Project+3" alt="프로젝트 3 이미지" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-white">저전력 IoT 환경 모니터링 센서</h3>
+                        <p class="text-gray-400 mb-4 text-sm">
+                           온습도, 미세먼지 등 환경 데이터를 수집하고, BLE를 통해 스마트폰 앱으로 전송하는 저전력 IoT 디바이스를 개발했습니다.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                           <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">ARM Cortex-M0</span>
+                           <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">BLE</span>
+                           <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">I2C</span>
+                           <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Power Optimization</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-gray-300 hover:text-white hover:underline flex items-center gap-1"><i data-lucide="github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Idea Generator Section -->
+        <section id="ai-generator" class="py-20 text-center">
+            <p class="text-lg mb-8 text-gray-400">
+                AI와 임베디드의 결합에 대한 새로운 영감이 필요하신가요?<br>
+                아래 버튼을 눌러 Gemini가 제안하는 창의적인 프로젝트 아이디어를 확인해 보세요.
+            </p>
+            <div class="text-center">
+                <button id="generate-idea-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 inline-flex items-center gap-2 transform hover:scale-105">
+                    🌐 Generate Idea
+                </button>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 text-center">
+            <h2 class="section-title">연락처 (CONTACT)</h2>
+            <p class="text-lg mb-8 text-gray-400">새로운 기회에 대해 이야기하는 것을 즐깁니다. 편하게 연락 주세요.</p>
+            <div class="flex justify-center items-center gap-8 text-gray-300">
+                <a href="mailto:your_email@example.com" class="flex flex-col items-center gap-2 hover:text-white transition-colors duration-300">
+                    <i data-lucide="mail" class="w-10 h-10"></i>
+                    <span>Email</span>
+                </a>
+                <a href="https://github.com/your_username" target="_blank" class="flex flex-col items-center gap-2 hover:text-white transition-colors duration-300">
+                    <i data-lucide="github" class="w-10 h-10"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://linkedin.com/in/your_username" target="_blank" class="flex flex-col items-center gap-2 hover:text-white transition-colors duration-300">
+                    <i data-lucide="linkedin" class="w-10 h-10"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800">
+        <div class="container mx-auto px-6 py-4 text-center text-gray-500">
+            <p>&copy; 2024 MUN. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- AI Idea Generator Modal -->
+    <div id="ai-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50 hidden">
+        <div class="glass-effect p-8 rounded-lg max-w-2xl w-full mx-4 relative transform transition-all duration-300 scale-95 opacity-0">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-white mb-4">✨ 새로운 AI 프로젝트 아이디어</h3>
+            <div id="ai-idea-content" class="text-gray-300 space-y-4" style="min-height: 150px;">
+                <!-- Loading spinner -->
+                <div id="loader" class="text-center py-8">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-200 mx-auto"></div>
+                    <p class="mt-4">Gemini가 아이디어를 생성 중입니다...</p>
+                </div>
+                <!-- Generated content will appear here -->
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main class="container">
-    <!-- HERO -->
-    <section class="hero" id="home">
-      <div class="card">
-        <div class="kicker">AI × Embedded</div>
-        <h1>현장 문제를 <span style="background:linear-gradient(120deg,var(--brand),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent">데이터와 디바이스</span>로 해결합니다.</h1>
-        <p class="muted">컴퓨터 비전 · 시계열 모델 · 경량화/최적화 · RTOS/리눅스 기반 펌웨어. PoC에서 양산까지 잇는 전체 파이프라인을 설계합니다.</p>
-        <div class="hero-cta">
-          <a class="btn" href="#projects">프로젝트 보기</a>
-          <a class="btn" href="resume.pdf" download>📄 이력서 다운로드</a>
-          <span class="pill">가용 상태: 프리랜스/협업 논의 환영</span>
-        </div>
-      </div>
-      <div class="card">
-        <strong>핵심 가치</strong>
-        <ul class="muted">
-          <li>On‑device AI: 모델 경량화(양자화/프루닝)와 메모리 제약 최적화</li>
-          <li>신뢰성: 데이터 드리프트/이상 탐지로 현장 강건성 확보</li>
-          <li>엔드‑투‑엔드: 수집 → 학습 → 배포 → 모니터링</li>
-        </ul>
-        <div class="stack" style="margin-top:8px">
-          <span class="badge">Python</span>
-          <span class="badge">C/C++</span>
-          <span class="badge">CUDA</span>
-          <span class="badge">PyTorch</span>
-          <span class="badge">TensorRT</span>
-          <span class="badge">STM32/ESP32</span>
-          <span class="badge">Yocto</span>
-        </div>
-      </div>
-    </section>
 
-    <!-- ABOUT -->
-    <section id="about">
-      <h2>About</h2>
-      <div class="grid">
-        <div class="col-8 card">
-          <p>인공지능과 임베디드의 경계에서 문제를 정의하고, 데이터를 수집·학습·배포하는 전체 사이클을 설계합니다. 안전·제조·건설 도메인에서 <em>실제 배치 가능한</em> 시스템을 만드는 데 집중합니다.</p>
-          <p class="muted">최근 관심사: 지능형 센서 융합(가속도/음향/영상), 실시간 이상 탐지, 엣지 디바이스 상의 커스텀 런타임.</p>
-        </div>
-        <aside class="col-4 card">
-          <strong>하이라이트</strong>
-          <ul>
-            <li>YOLO 기반 실시간 안전 모니터링</li>
-            <li>Isolation Forest/LOF 이상치 탐지</li>
-            <li>Jetson/ESP32 배포 자동화</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
+    <script>
+        lucide.createIcons();
 
-    <!-- SKILLS -->
-    <section id="skills">
-      <h2>Skills</h2>
-      <div class="grid">
-        <div class="col-6 card">
-          <h3>AI/ML</h3>
-          <ul class="skills-list">
-            <li>딥러닝: CNN/Transformer, 멀티모달, 시계열</li>
-            <li>경량화: 양자화, 프루닝, Distillation, TensorRT</li>
-            <li>데이터 엔지니어링: 파이프라인, 라벨링 전략, MLOps</li>
-            <li>CV: 객체 탐지/분할, 추적, 도메인 적응</li>
-            <li>이상 탐지: Isolation Forest, LOF, One‑Class SVM</li>
-            <li>배포: Jetson, ARM64, WebAssembly (옵션)</li>
-          </ul>
-        </div>
-        <div class="col-6 card">
-          <h3>Embedded</h3>
-          <ul class="skills-list">
-            <li>MCU: STM32, ESP32, NRF52 (FreeRTOS/Arduino/ESP‑IDF)</li>
-            <li>리눅스: Yocto, 드라이버/디바이스 트리 기초</li>
-            <li>통신: UART/I2C/SPI, CAN, BLE/Wi‑Fi, MQTT</li>
-            <li>센서: IMU, 마이크, 카메라(MIPI/USB), 라이다</li>
-            <li>성능/전력: DMA/IRQ, 저전력 모드, 메모리 튜닝</li>
-            <li>테스트: HIL, 시뮬레이션, 로깅/원격 OTA</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-    <!-- PROJECTS -->
-    <section id="projects">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-        <h2>Projects</h2>
-        <div class="filters">
-          <button class="btn" data-filter="all" onclick="filterProjects('all')">전체</button>
-          <button class="btn" data-filter="ai" onclick="filterProjects('ai')">AI</button>
-          <button class="btn" data-filter="embedded" onclick="filterProjects('embedded')">Embedded</button>
-          <button class="btn" data-filter="edge" onclick="filterProjects('edge')">Edge AI</button>
-        </div>
-      </div>
-      <div class="grid">
-        <!-- Project Card Template: duplicate and edit -->
-        <article class="col-6 card project" data-tags="ai,edge">
-          <div class="meta">
-            <span class="badge">YOLOv8</span>
-            <span class="badge">Jetson</span>
-            <span class="badge">Realtime</span>
-          </div>
-          <h3>실시간 낙석 탐지 시스템</h3>
-          <p class="muted">현장 카메라 스트림에서 낙석 위험을 탐지하고, 경보·로깅·대시보드로 연동. TensorRT로 45 FPS 달성.</p>
-          <div class="actions">
-            <a class="btn" href="https://github.com/your-id/rockfall-detector" target="_blank" rel="noopener">Repo</a>
-            <a class="btn" href="#" aria-disabled="true">Demo</a>
-          </div>
-        </article>
-        <article class="col-6 card project" data-tags="ai">
-          <div class="meta">
-            <span class="badge">Isolation Forest</span>
-            <span class="badge">Timeseries</span>
-          </div>
-          <h3>발파 천공 데이터 이상 탐지</h3>
-          <p class="muted">센서 시계열에서 비정상 패턴을 조기 포착하여 위험 구간을 사전 경고. 라벨 없이 비지도 학습으로 운영.</p>
-          <div class="actions">
-            <a class="btn" href="https://github.com/your-id/drilling-anomaly" target="_blank" rel="noopener">Repo</a>
-          </div>
-        </article>
-        <article class="col-6 card project" data-tags="embedded">
-          <div class="meta">
-            <span class="badge">ESP32</span>
-            <span class="badge">FreeRTOS</span>
-          </div>
-          <h3>BLE‑WiFi 게이트웨이 로거</h3>
-          <p class="muted">BLE 센서 허브를 Wi‑Fi/ MQTT로 브리징하여 현장 데이터 취합. OTA 업데이트와 로컬 버퍼링 지원.</p>
-          <div class="actions">
-            <a class="btn" href="https://github.com/your-id/ble-wifi-gateway" target="_blank" rel="noopener">Repo</a>
-          </div>
-        </article>
-        <article class="col-6 card project" data-tags="edge,embedded">
-          <div class="meta">
-            <span class="badge">STM32</span>
-            <span class="badge">TinyML</span>
-          </div>
-          <h3>소음 기반 이상 소리 감지 TinyML</h3>
-          <p class="muted">MCU 상에서 MFCC + 경량 모델로 고장 징후 탐지. 배터리 구동 환경에서 수 주 동작.</p>
-          <div class="actions">
-            <a class="btn" href="https://github.com/your-id/tiny-audio-anomaly" target="_blank" rel="noopener">Repo</a>
-          </div>
-        </article>
-      </div>
-    </section>
+        // Gemini API Project Idea Generator
+        const generateIdeaBtn = document.getElementById('generate-idea-btn');
+        const aiModal = document.getElementById('ai-modal');
+        const aiModalContent = aiModal.querySelector('div:first-child');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const aiIdeaContent = document.getElementById('ai-idea-content');
+        const loader = document.getElementById('loader');
 
-    <!-- RESEARCH / PUBLICATIONS -->
-    <section id="research">
-      <h2>Research</h2>
-      <div class="grid">
-        <div class="col-8 card">
-          <h3>Publications & Talks</h3>
-          <ul>
-            <li>[Conference] YOLO 기반 안전 모니터링 현장 적용 사례, 2025</li>
-            <li>[Poster] 비라벨 시계열 이상 탐지 파이프라인, 2025</li>
-            <li>[Talk] Jetson에서의 모델 최적화 전략, 2024</li>
-          </ul>
-        </div>
-        <aside class="col-4 card">
-          <h3>Artifacts</h3>
-          <ul>
-            <li><a href="papers/rockfall_yolo.pdf">논문 PDF</a></li>
-            <li><a href="slides/edge_optimizations.pdf">발표 슬라이드</a></li>
-            <li><a href="datasets/index.html">데이터셋 카드</a></li>
-          </ul>
-        </aside>
-      </div>
-    </section>
+        const showModal = () => {
+            aiModal.classList.remove('hidden');
+            setTimeout(() => {
+                aiModalContent.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        };
+        
+        const hideModal = () => {
+            aiModalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                aiModal.classList.add('hidden');
+            }, 300);
+        };
 
-    <!-- TIMELINE -->
-    <section id="timeline">
-      <h2>Experience Timeline</h2>
-      <ol class="timeline">
-        <li class="timeline-item"><span class="dot"></span><strong>2025</strong> — AI 안전 모니터링 PoC → 현장 시범 운영</li>
-        <li class="timeline-item"><span class="dot"></span><strong>2024</strong> — ESP32 기반 센서 허브 개발, OTA/로그 파이프라인 구축</li>
-        <li class="timeline-item"><span class="dot"></span><strong>2023</strong> — 시계열 이상 탐지 연구 착수, 데이터 수집 인프라 정비</li>
-      </ol>
-    </section>
+        generateIdeaBtn.addEventListener('click', () => {
+            showModal();
+            generateProjectIdea();
+        });
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <div class="contact card">
-        <div>
-          <p>협업/채용/자문 문의는 아래로 연락 주세요.</p>
-          <p>
-            이메일: <a href="mailto:your.name@email.com">your.name@email.com</a><br/>
-            깃허브: <a href="https://github.com/your-id" target="_blank" rel="noopener">github.com/your-id</a><br/>
-            링크드인: <a href="https://linkedin.com/in/your-id" target="_blank" rel="noopener">linkedin.com/in/your-id</a>
-          </p>
-          <p class="footnote muted">이 사이트는 순수 HTML/CSS/JS 단일 파일로 제작되어 GitHub Pages에 쉽게 배포할 수 있습니다.</p>
-        </div>
-        <form class="card" onsubmit="location.href='mailto:your.name@email.com?subject=' + encodeURIComponent(this.subject.value) + '&body=' + encodeURIComponent(this.message.value); return false;">
-          <label>제목<br/>
-            <input required name="subject" style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text)"/>
-          </label>
-          <br/>
-          <label>메시지<br/>
-            <textarea required name="message" rows="6" style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text)"></textarea>
-          </label>
-          <br/>
-          <button class="btn" type="submit">✉️ 메일 보내기</button>
-        </form>
-      </div>
-    </section>
+        closeModalBtn.addEventListener('click', hideModal);
+        aiModal.addEventListener('click', (event) => {
+            if (event.target === aiModal) {
+                hideModal();
+            }
+        });
 
-    <section class="footer">
-      <div class="stack">
-        <span class="muted">© <span id="y"></span> Your Name</span>
-        <span class="muted">•</span>
-        <a class="muted" href="/rss.xml">RSS</a>
-        <span class="muted">•</span>
-        <a class="muted" href="#">Imprint</a>
-      </div>
-    </section>
-  </main>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+        async function generateProjectIdea() {
+            loader.style.display = 'block';
+            aiIdeaContent.innerHTML = ''; // Clear previous content
+            aiIdeaContent.appendChild(loader);
+
+            const apiKey = ""; // API 키는 비워 둡니다.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            const systemPrompt = "You are a creative mentor for aspiring AI and Embedded Systems engineers. Your goal is to provide inspiring and practical project ideas in Korean.";
+            const userQuery = "Generate a unique project idea that combines artificial intelligence with an embedded system. The idea should be suitable for a portfolio. Respond in Korean Markdown format with the following structure:\n\n**Project Title:** [Your Title Here]\n\n**Description:** [Your one-paragraph description here]\n\n**Key Technologies:**\n- Tech 1\n- Tech 2\n- Tech 3 and more";
+
+            const payload = {
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                contents: [{ parts: [{ text: userQuery }] }],
+            };
+            
+            try {
+                // Implementing exponential backoff for retries
+                let response;
+                let retries = 3;
+                let delay = 1000;
+                for (let i = 0; i < retries; i++) {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload),
+                    });
+                    if (response.ok) break;
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const text = candidate.content.parts[0].text;
+                    // Simple Markdown to HTML conversion
+                    const htmlContent = text
+                        .replace(/\*\*Project Title:\*\*/g, '<h4>')
+                        .replace(/\*\*Description:\*\*/g, '</h4><p class="text-gray-400">')
+                        .replace(/\*\*Key Technologies:\*\*/g, '</p><h4>주요 기술</h4><ul class="list-disc list-inside text-gray-400">')
+                        .replace(/- /g, '<li>')
+                        .replace(/\n/g, '<br>')
+                        .replace(/<\/li><br>/g, '</li>') + '</ul>';
+
+                    aiIdeaContent.innerHTML = htmlContent;
+                } else {
+                    aiIdeaContent.innerHTML = '<p>아이디어를 생성하는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>';
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                aiIdeaContent.innerHTML = '<p>오류가 발생했습니다. 네트워크 연결을 확인하거나 잠시 후 다시 시도해 주세요.</p>';
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
+
