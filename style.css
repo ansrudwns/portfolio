@@ -259,10 +259,15 @@ main {
 
 .metric-label {
   color: var(--muted);
-  display: block;
+  display: grid;
+  gap: 0.18rem;
   margin-top: 0.45rem;
   font-size: 0.92rem;
   line-height: 1.55;
+}
+
+.metric-label span {
+  display: block;
 }
 
 .section {
