@@ -1,370 +1,511 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문경준 | AI & 임베디드 포트폴리오</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body {
-            font-family: 'Times New Roman', Times, serif; /* 글씨체 변경 */
-            background-color: #030712; /* 더 어두운 배경색 (회색 계열) */
-            color: #D1D5DB; /* 기본 텍스트 색상 (밝은 회색) */
-        }
-        .section-title {
-            @apply text-3xl md:text-4xl font-bold text-center mb-12 text-white;
-        }
-        .glass-effect {
-            background: rgba(55, 65, 81, 0.5); /* 살짝 더 밝은 반투명 배경 (회색) */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="컴퓨터 비전, RAG, LLMOps, Azure 기반 AI 서비스 경험을 정리한 문경준의 AI Engineer 포트폴리오입니다.">
+  <meta name="theme-color" content="#101114">
+  <meta property="og:title" content="문경준 | Project Portfolio">
+  <meta property="og:description" content="Computer Vision, RAG, LLMOps, FastAPI, Azure 기반 프로젝트와 연구·해커톤 경험을 정리한 포트폴리오입니다.">
+  <meta property="og:type" content="website">
+  <title>문경준 | AI Engineer Portfolio</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="script.js" defer></script>
 </head>
-<body class="bg-gray-950 text-gray-300">
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="홈으로 이동">
+      <span class="brand-mark">M</span>
+      <span>문경준</span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#collaboration">Collaboration</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-    <!-- Header & Navigation -->
-    <header class="bg-gray-900/70 backdrop-blur-lg sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-white">MUN</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="hover:text-white transition-colors duration-300">소개</a>
-                <a href="#skills" class="hover:text-white transition-colors duration-300">기술 스택</a>
-                <a href="#projects" class="hover:text-white transition-colors duration-300">프로젝트</a>
-                <a href="#contact" class="hover:text-white transition-colors duration-300">연락처</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">AI Engineer · Cloud · LLMOps</p>
+        <h1 id="hero-title">문경준</h1>
+        <p class="hero-subtitle">Portfolio</p>
+        <p class="hero-text">
+          컴퓨터 비전, 이상 탐지, RAG, LLMOps 프로젝트를 수행하며 데이터 이해부터 모델링, API 구현, 클라우드 배포까지 End-to-End 흐름을 경험했습니다. 안정성과 확장성을 고려한 AI 서비스 설계에 관심이 있습니다.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#projects">
+            <i data-lucide="layout-grid"></i>
+            프로젝트 보기
+          </a>
+          <a class="button secondary" href="https://github.com/ansrudwns" target="_blank" rel="noreferrer">
+            <i data-lucide="github"></i>
+            GitHub
+          </a>
+          <a class="button secondary" href="https://www.linkedin.com/in/gyeong-june-mun-4bb9b6387" target="_blank" rel="noreferrer">
+            <i data-lucide="linkedin"></i>
+            LinkedIn
+          </a>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#about" class="block py-2">소개</a>
-            <a href="#skills" class="block py-2">기술 스택</a>
-            <a href="#projects" class="block py-2">프로젝트</a>
-            <a href="#contact" class="block py-2">연락처</a>
+      </div>
+      <aside class="hero-panel" aria-label="포트폴리오 요약">
+        <div class="profile-summary">
+          <img src="assets/profile/gyeongjun-profile.jpg" alt="문경준 프로필 사진">
+          <span>
+            <strong>Gyeong June Mun</strong>
+            <small>Portfolio</small>
+          </span>
         </div>
-    </header>
-
-    <main class="container mx-auto px-6">
-
-        <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center">
-            <div class="text-center md:text-left w-full">
-                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-2">
-                    Code That Moves
-                </h1>
-                <p class="text-2xl md:text-3xl text-gray-300 mb-4">AI & Embedded Developer</p>
-                <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto md:mx-0">
-                    소프트웨어의 논리와 하드웨어의 물리적 움직임을 연결하여<br class="hidden md:block">
-                    혁신적인 솔루션을 만듭니다.
-                </p>
-                <a href="#projects" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-3 px-8 rounded-full transition-all duration-300 inline-block transform hover:scale-105">
-                    PROJECT
-                </a>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="py-20">
-            <h2 class="section-title">ABOUT ME</h2>
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="w-full md:w-1/3">
-                    <img src="https://placehold.co/400x400/1F2937/E5E7EB?text=Profile\nPhoto" alt="프로필 사진" class="rounded-full shadow-lg mx-auto">
-                </div>
-                <div class="w-full md:w-2/3 text-lg text-gray-300">
-                    <p class="mb-4">
-                        안녕하세요, 개발자 <span class="whitespace-nowrap text-white">문경준</span>입니다. 저는 아이디어가 단순히 화면 속에 머무는 것이 아니라, 현실 세계에서 직접 만지고 상호작용할 수 있는 형태로 구현될 때 가장 큰 보람을 느낍니다. 이 열정이 저를 소프트웨어의 논리와 하드웨어의 물리적 움직임을 연결하는 AI & 임베디드 개발자의 길로 이끌었습니다.
-                    </p>
-                    <p class="mb-4">
-                        특히, 한정된 자원을 가진 엣지 디바이스에 최적화된 AI 모델을 올려, 전력 소모는 최소화하면서도 즉각적인 반응성을 구현하는 데 강점이 있습니다. 이는 스마트 팩토리의 결함 탐지부터 자율주행 로봇의 눈이 되기까지, 기술이 필요한 곳에 지능을 부여하는 핵심적인 과정이라고 믿습니다.
-                    </p>
-                    <p>
-                        이론과 현실의 간극을 메우며, 코드 한 줄이 실질적인 움직임으로 변환되는 순간을 만들어나갑니다. 기술을 통해 더 스마트하고 효율적인 세상을 만드는 여정에 함께하고 싶습니다.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="py-20">
-            <h2 class="section-title">SKILLS</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- AI Skills -->
-                <div class="glass-effect p-8">
-                    <div class="flex items-center gap-4 mb-4">
-                        <i data-lucide="brain-circuit" class="w-10 h-10 text-gray-200"></i>
-                        <h3 class="text-2xl font-bold text-white">Artificial Intelligence</h3>
-                    </div>
-                    <ul class="space-y-2 text-gray-300">
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Python, TensorFlow, PyTorch</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Computer Vision (OpenCV)</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> TinyML, Edge AI</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Data Preprocessing & Analysis</li>
-                    </ul>
-                </div>
-                <!-- Embedded Skills -->
-                <div class="glass-effect p-8">
-                    <div class="flex items-center gap-4 mb-4">
-                        <i data-lucide="cpu" class="w-10 h-10 text-gray-200"></i>
-                        <h3 class="text-2xl font-bold text-white">Embedded Systems</h3>
-                    </div>
-                    <ul class="space-y-2 text-gray-300">
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> C, C++</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> ARM Cortex-M (STM32)</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> RTOS, FreeRTOS</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> I2C, SPI, UART, CAN</li>
-                    </ul>
-                </div>
-                <!-- Tools & Others -->
-                <div class="glass-effect p-8">
-                    <div class="flex items-center gap-4 mb-4">
-                        <i data-lucide="wrench" class="w-10 h-10 text-gray-200"></i>
-                        <h3 class="text-2xl font-bold text-white">Tools & Others</h3>
-                    </div>
-                    <ul class="space-y-2 text-gray-300">
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Git, GitHub</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Docker</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> Linux, Bash Scripting</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-gray-400"></i> PCB Design (KiCad)</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="py-20">
-            <h2 class="section-title">PROJECTS</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="glass-effect overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                    <img src="https://placehold.co/600x400/111827/D1D5DB?text=Project+1" alt="프로젝트 1 이미지" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-white">엣지 AI 기반 스마트 팩토리 결함 탐지기</h3>
-                        <p class="text-gray-400 mb-4 text-sm">
-                            카메라로 생산 라인을 실시간 모니터링하고, 경량화된 CNN 모델을 MCU에 탑재하여 제품 결함을 즉시 감지하는 시스템입니다.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">TensorFlow Lite</span>
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">STM32</span>
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">OpenCV</span>
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">C++</span>
-                        </div>
-                        <div class="flex gap-4">
-                            <a href="#" class="text-gray-300 hover:text-white hover:underline flex items-center gap-1"><i data-lucide="github"></i> GitHub</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="glass-effect overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                    <img src="https://placehold.co/600x400/111827/D1D5DB?text=Project+2" alt="프로젝트 2 이미지" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-white">RTOS 기반 자율주행 로봇 제어 시스템</h3>
-                        <p class="text-gray-400 mb-4 text-sm">
-                            FreeRTOS를 사용하여 다중 센서(LiDAR, IMU) 데이터를 실시간으로 처리하고 모터를 정밀 제어하는 자율주행 로봇 플랫폼입니다.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">FreeRTOS</span>
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">C</span>
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">CAN</span>
-                            <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">SLAM</span>
-                        </div>
-                        <div class="flex gap-4">
-                            <a href="#" class="text-gray-300 hover:text-white hover:underline flex items-center gap-1"><i data-lucide="github"></i> GitHub</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project 3 -->
-                <div class="glass-effect overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                    <img src="https://placehold.co/600x400/111827/D1D5DB?text=Project+3" alt="프로젝트 3 이미지" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-white">저전력 IoT 환경 모니터링 센서</h3>
-                        <p class="text-gray-400 mb-4 text-sm">
-                           온습도, 미세먼지 등 환경 데이터를 수집하고, BLE를 통해 스마트폰 앱으로 전송하는 저전력 IoT 디바이스를 개발했습니다.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                           <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">ARM Cortex-M0</span>
-                           <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">BLE</span>
-                           <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">I2C</span>
-                           <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Power Optimization</span>
-                        </div>
-                        <div class="flex gap-4">
-                            <a href="#" class="text-gray-300 hover:text-white hover:underline flex items-center gap-1"><i data-lucide="github"></i> GitHub</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- AI Idea Generator Section -->
-        <section id="ai-generator" class="py-20 text-center">
-            <p class="text-lg mb-8 text-gray-400">
-                AI와 임베디드의 결합에 대한 새로운 영감이 필요하신가요?<br>
-                아래 버튼을 눌러 Gemini가 제안하는 창의적인 프로젝트 아이디어를 확인해 보세요.
-            </p>
-            <div class="text-center">
-                <button id="generate-idea-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 inline-flex items-center gap-2 transform hover:scale-105">
-                    🌐 Generate Idea
-                </button>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 text-center">
-            <h2 class="section-title">CONTACT</h2>
-            <p class="text-lg mb-8 text-gray-400">새로운 기회에 대해 이야기하는 것을 즐깁니다. 편하게 연락 주세요.</p>
-            <div class="flex justify-center items-center gap-8 text-gray-300">
-                <a href="mailto:your_email@example.com" class="flex flex-col items-center gap-2 hover:text-white transition-colors duration-300">
-                    <i data-lucide="mail" class="w-10 h-10"></i>
-                    <span>Email</span>
-                </a>
-                <a href="https://github.com/your_username" target="_blank" class="flex flex-col items-center gap-2 hover:text-white transition-colors duration-300">
-                    <i data-lucide="github" class="w-10 h-10"></i>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://linkedin.com/in/your_username" target="_blank" class="flex flex-col items-center gap-2 hover:text-white transition-colors duration-300">
-                    <i data-lucide="linkedin" class="w-10 h-10"></i>
-                    <span>LinkedIn</span>
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto px-6 py-4 text-center text-gray-500">
-            <p>&copy; 2024 MUN. All Rights Reserved.</p>
+        <div>
+          <span class="metric">전남대학교</span>
+          <span class="metric-label">에너지자원공학과 · 2019.03 - 2026.02</span>
         </div>
-    </footer>
-
-    <!-- AI Idea Generator Modal -->
-    <div id="ai-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50 hidden">
-        <div class="glass-effect p-8 rounded-lg max-w-2xl w-full mx-4 relative transform transition-all duration-300 scale-95 opacity-0">
-            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <h3 class="text-2xl font-bold text-white mb-4">✨ 새로운 AI 프로젝트 아이디어</h3>
-            <div id="ai-idea-content" class="text-gray-300 space-y-4" style="min-height: 150px;">
-                <!-- Loading spinner -->
-                <div id="loader" class="text-center py-8">
-                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-200 mx-auto"></div>
-                    <p class="mt-4">Gemini가 아이디어를 생성 중입니다...</p>
-                </div>
-                <!-- Generated content will appear here -->
-            </div>
+        <div>
+          <span class="metric">Microsoft AI School</span>
+          <span class="metric-label">Azure AI · RAG/LLMOps · 2025.09 - 2026.02</span>
         </div>
-    </div>
+        <div>
+          <span class="metric">AI Chip Camp</span>
+          <span class="metric-label">AI Semiconductor Training · GPU/NPU · 2026.05.11 - 2026.05.13</span>
+        </div>
+      </aside>
+    </section>
 
+    <section class="section intro" aria-label="소개">
+      <div>
+        <p class="section-kicker">About</p>
+        <h2>사용 가능한 AI 시스템</h2>
+        <p class="section-subtitle">실제 서비스 구조 안에서 동작하도록 만드는 데 집중합니다.</p>
+      </div>
+      <p>
+        데이터 기반 문제 해결과 클라우드 환경에서의 AI 서비스 설계 경험을 보유한 AI 엔지니어입니다. 컴퓨터 비전, 이상 탐지, 생성형 AI(RAG, LLMOps) 프로젝트를 수행하며 데이터 이해부터 모델링, API 구현, 서비스 배포까지 End-to-End 흐름을 경험했습니다. 의도 추론 기반 라우팅 구조, RAG 아키텍처 설계, Azure 기반 AI 서비스 운영 경험을 바탕으로 안정성과 확장성을 고려한 시스템 구축에 집중하고 있습니다.
+      </p>
+    </section>
 
-    <script>
-        lucide.createIcons();
+    <section class="section credentials" aria-labelledby="credentials-title">
+      <div class="section-heading">
+        <p class="section-kicker">Credentials</p>
+        <h2 id="credentials-title">Certifications</h2>
+      </div>
+      <div class="credential-grid">
+        <article class="credential-item">
+          <span class="credential-name">Microsoft Certified: Azure AI Fundamentals</span>
+          <span class="credential-meta">Microsoft · 2026.01.23</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">Google Analytics Certification</span>
+          <span class="credential-meta">Google · 2026.04.11</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">6Sigma Green Belt</span>
+          <span class="credential-meta">한국자격검정평가진흥원 · 2026.03.24 · 등록번호 2023-005394</span>
+        </article>
+      </div>
+    </section>
 
-        // Mobile Menu Toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+    <section class="section" aria-labelledby="skills-title">
+      <div class="section-heading">
+        <p class="section-kicker">Core Skills</p>
+        <h2 id="skills-title">핵심 역량</h2>
+      </div>
+      <div class="capability-grid">
+        <article class="capability-card">
+          <i data-lucide="brain-circuit"></i>
+          <h3>AI / ML</h3>
+          <p>Agentic AI, Generative AI, YOLO, 이상 탐지, RAG</p>
+        </article>
+        <article class="capability-card">
+          <i data-lucide="server-cog"></i>
+          <h3>Backend / Data</h3>
+          <p>Python, FastAPI, PostgreSQL, Vector DB, Pandas, Scikit-learn 기반 데이터 처리</p>
+        </article>
+        <article class="capability-card">
+          <i data-lucide="cloud"></i>
+          <h3>Cloud / LLMOps</h3>
+          <p>Azure OpenAI, AI Search, Container Apps, Vertex AI, AI 서비스 운영 구조</p>
+        </article>
+      </div>
+    </section>
 
-        // Gemini API Project Idea Generator
-        const generateIdeaBtn = document.getElementById('generate-idea-btn');
-        const aiModal = document.getElementById('ai-modal');
-        const aiModalContent = aiModal.querySelector('div:first-child');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const aiIdeaContent = document.getElementById('ai-idea-content');
-        const loader = document.getElementById('loader');
+    <section id="experience" class="section" aria-labelledby="experience-title">
+      <div class="section-heading">
+        <p class="section-kicker">Experience</p>
+        <h2 id="experience-title">연구 경험</h2>
+      </div>
+      <div class="experience-list">
+        <article class="experience-item">
+          <div>
+            <span class="type">학부연구생 · Research Assistant · 2024.11 - 2025.07</span>
+            <h3>암석역학 및 지하공간 연구실</h3>
+          </div>
+          <div>
+            <p>암반 사면과 터널 시공 현장의 위험 구간을 데이터로 탐지하는 연구를 수행했습니다.</p>
+          </div>
+          <div class="research-topic-grid">
+              <article class="research-topic-card">
+                <div class="research-topic-body">
+                  <span class="type">Computer Vision</span>
+                  <h4>CCTV 기반 낙석 탐지</h4>
+                  <p>YOLOv8 객체 탐지와 프레임 차분 기반 움직임 검출을 결합해 낙석 후보를 필터링하는 연구 프로토타입을 구현했습니다.</p>
+                  <details class="project-detail">
+                    <summary>상세 내용</summary>
+                    <div class="detail-content">
+                      <figure class="detail-figure">
+                        <img src="assets/research/rockfall-detection-preview.jpg" alt="YOLOv8 기반 낙석 탐지 결과">
+                        <figcaption>YOLOv8와 움직임 검출을 결합한 낙석 후보 탐지 결과</figcaption>
+                      </figure>
+                      <div class="detail-block">
+                        <strong>문제 정의</strong>
+                        <p>낙석 탐지는 작은 물체가 빠르게 움직이고, 조명 변화나 배경 흔들림으로 오탐이 쉽게 발생하는 영상 문제였습니다. 이를 줄이기 위해 YOLOv8 단독 탐지 결과를 그대로 사용하지 않고, 프레임 간 차분으로 실제 움직임이 발생한 영역을 함께 추출했습니다.</p>
+                      </div>
+                      <div class="detail-block">
+                        <strong>구현 방식</strong>
+                        <p>영상 프레임을 순차 처리하면서 YOLOv8로 암석 후보 박스를 만들고, OpenCV 기반 MotionDetector로 움직임 박스를 계산했습니다. 두 박스가 IoU/IoM 기준을 만족하는 경우만 최종 낙석 후보로 남기고, GUI에서 confidence, iou threshold, 타일 크기, step, 표시 방식(box/dot/none)을 조정할 수 있도록 구성했습니다.</p>
+                      </div>
+                      <div class="detail-block">
+                        <strong>실험 방향</strong>
+                        <p>이미지 크기, batch size, learning rate 조합을 바꿔가며 YOLOv8 학습 실험을 진행했고, 작은 낙석을 놓치지 않는 recall 중심 설정과 오탐을 줄이는 precision 중심 설정 사이의 trade-off를 확인했습니다.</p>
+                      </div>
+                      <p class="detail-evidence">구현 기록: YOLOv8·MotionDetector 코드, IoU/IoM fusion, GUI 기반 영상 처리 흐름.</p>
+                    </div>
+                  </details>
+                  <a class="button small primary detail-link" href="https://github.com/ansrudwns/rockfall-detection-yolov8" target="_blank" rel="noreferrer">
+                    <i data-lucide="github"></i>
+                    Rockfall GitHub
+                  </a>
+                </div>
+              </article>
+              <article class="research-topic-card">
+                <div class="research-topic-body">
+                  <span class="type">Anomaly Detection</span>
+                  <h4>터널 MWD 이상 탐지</h4>
+                  <p>터널 시공 현장의 MWD 신호와 RMR 변화 데이터를 연결해 지반 위험 구간을 추정하고 비지도 이상 탐지 모델을 비교했습니다.</p>
+                  <details class="project-detail">
+                    <summary>상세 내용</summary>
+                    <div class="detail-content">
+                      <figure class="detail-figure wide">
+                        <img src="assets/research/mwd-anomaly-preview.png" alt="MWD 터널 시공 현장 데이터 이상 구간 탐지 결과">
+                        <figcaption>MWD 신호와 RMR 변화를 함께 시각화한 이상 구간 탐지 결과</figcaption>
+                      </figure>
+                      <div class="detail-block">
+                        <strong>문제 정의</strong>
+                        <p>터널 굴진 중 장비에서 수집되는 boring speed, rotation pressure, feed pressure 등의 MWD 신호가 지반 상태 변화를 간접적으로 반영한다는 점에서 출발했습니다. 원본 현장 데이터를 깊이 기준으로 정렬하고, RMR 값이 저하되는 구간을 위험 구간의 proxy label로 정의했습니다.</p>
+                      </div>
+                      <div class="detail-block">
+                        <strong>모델 비교</strong>
+                        <p>Isolation Forest, Local Outlier Factor, One-Class SVM을 비교했고, feature 조합과 contamination, n_neighbors, gamma, nu 같은 모델 파라미터를 바꿔가며 실험했습니다. 탐지 결과는 해석 가능한 위험 구간으로 만들기 위해 가까운 이상 구간을 병합하고, 너무 짧은 구간은 필터링했습니다.</p>
+                      </div>
+                      <div class="detail-block">
+                        <strong>평가 방식</strong>
+                        <p>예측 위험 구간과 RMR 저하 구간을 0.5m depth-bin 단위로 비교해 Precision, Recall, F1 Score, Accuracy, OMC를 산출했습니다. 이 과정을 통해 현장별로 안정적인 feature 조합과 모델을 확인했습니다.</p>
+                      </div>
+                      <p class="detail-evidence">구현 기록: IF/LOF/OCSVM 실험 GUI, depth-bin 평가, 결과 CSV와 시각화 그래프.</p>
+                    </div>
+                  </details>
+                  <a class="button small primary detail-link" href="https://github.com/ansrudwns/tunnel-mwd-anomaly-detection" target="_blank" rel="noreferrer">
+                    <i data-lucide="github"></i>
+                    MWD GitHub
+                  </a>
+                </div>
+              </article>
+          </div>
+        </article>
+      </div>
+    </section>
 
-        const showModal = () => {
-            aiModal.classList.remove('hidden');
-            setTimeout(() => {
-                aiModalContent.classList.remove('scale-95', 'opacity-0');
-            }, 10);
-        };
-        
-        const hideModal = () => {
-            aiModalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                aiModal.classList.add('hidden');
-            }, 300);
-        };
+    <section id="projects" class="section" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <p class="section-kicker">Personal Project</p>
+        <h2 id="projects-title">개인 프로젝트</h2>
+      </div>
+      <div class="project-grid">
+        <article class="project-card">
+          <img src="https://opengraph.githubassets.com/portfolio-news2skill/ansrudwns/news2skill" alt="news2skill GitHub 미리보기">
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="type">AI R&D Pipeline</span>
+              <span class="status">Latest</span>
+            </div>
+            <h3>News2Skill</h3>
+            <p>AI 기술 동향을 수집해 실행 가능한 Skills와 설계 기록으로 전환하는 개인 R&D 지식 파이프라인입니다.</p>
+            <ul class="project-points">
+              <li>GitHub Actions 기반 AI 뉴스 수집과 로컬 LLM 에이전트 처리 흐름 설계</li>
+              <li>Human-in-the-loop 승인 단계를 두어 지식 베이스 흡수 여부를 통제</li>
+              <li>정적 감사, HMAC provenance, downgrade 방지로 생성물 신뢰성 관리</li>
+            </ul>
+            <div class="tags">
+              <span>Python</span>
+              <span>GitHub Actions</span>
+              <span>LLM Workflow</span>
+              <span>Provenance</span>
+            </div>
+            <details class="project-detail">
+              <summary>상세 내용</summary>
+              <div class="detail-content">
+                <div class="detail-block">
+                  <strong>구현 범위</strong>
+                  <p>GitHub Actions로 AI 뉴스 후보를 수집하고, 로컬 LLM 워크플로우에서 초안 생성·승인·커밋까지 이어지는 지식화 파이프라인을 설계했습니다.</p>
+                </div>
+                <div class="detail-block">
+                  <strong>신뢰성 장치</strong>
+                  <p>생성물 서명, 정적 감사, 다운그레이드 방지 검사를 두어 자동화 결과가 바로 반영되지 않고 검증 단계를 거치도록 구성했습니다.</p>
+                </div>
+                <p class="detail-evidence">구현 기록: <code>.github/workflows</code>, <code>scripts/sign_drafts.py</code>, <code>scripts/audit_index.py</code>, <code>.agents/workflows</code>.</p>
+              </div>
+            </details>
+            <div class="card-actions">
+              <a class="button small primary" href="https://github.com/ansrudwns/news2skill" target="_blank" rel="noreferrer">
+                <i data-lucide="github"></i>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
 
-        generateIdeaBtn.addEventListener('click', () => {
-            showModal();
-            generateProjectIdea();
-        });
+        <article class="project-card">
+          <img src="https://opengraph.githubassets.com/portfolio-krafton/ansrudwns/krafton-ai-rnd-hackathon" alt="KRAFTON AI R&D Hackathon GitHub 미리보기">
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="type">AI R&D Hackathon</span>
+              <span class="status">Finalist</span>
+            </div>
+            <h3>KRAFTON AI R&D Hackathon</h3>
+            <p>KRAFTON AI R&D Hackathon 본선 진출 경험을 문제별 풀이와 회고로 정리한 개인 아카이브입니다.</p>
+            <ul class="project-points">
+              <li>예선 MultiplierBoard, SparseTap과 본선 Written Exam, BattlePredict, VideoAgent 풀이 정리</li>
+              <li>대회 제출본과 대회 직후 개선본을 분리해 풀이의 변화와 한계를 기록</li>
+              <li>주최자 후기 기반으로 출제 의도, 문제 구조, 사후 개선 방향 분석</li>
+            </ul>
+            <div class="tags">
+              <span>AI Steering</span>
+              <span>LLMOps</span>
+              <span>Problem Solving</span>
+              <span>VideoAgent</span>
+              <span>Finalist</span>
+            </div>
+            <details class="project-detail">
+              <summary>상세 내용</summary>
+              <div class="detail-content">
+                <div class="detail-block">
+                  <strong>정리 방식</strong>
+                  <p>예선 Day 1·2, 본선 Day 1·2 문제를 대회 제출본과 대회 직후 개선본으로 구분해 풀이 흐름과 한계를 남겼습니다.</p>
+                </div>
+                <div class="detail-block">
+                  <strong>대표 문제</strong>
+                  <p>VideoAgent는 영상 분할, 프레임 추출, 요약 병합 흐름으로 정리했고, BattlePredict는 Bradley-Terry와 Hungarian matching 기반 접근을 기록했습니다.</p>
+                </div>
+                <p class="detail-evidence">구현 기록: 문제별 README, VideoAgent FFmpeg 처리 코드, BattlePredict <code>correct_solve.py</code>, SparseTap GF(2) 풀이.</p>
+              </div>
+            </details>
+            <div class="card-actions">
+              <a class="button small primary" href="https://github.com/ansrudwns/krafton-ai-rnd-hackathon" target="_blank" rel="noreferrer">
+                <i data-lucide="github"></i>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-        closeModalBtn.addEventListener('click', hideModal);
-        aiModal.addEventListener('click', (event) => {
-            if (event.target === aiModal) {
-                hideModal();
-            }
-        });
+    <section id="collaboration" class="section" aria-labelledby="collab-title">
+      <div class="section-heading">
+        <p class="section-kicker">Team Experience</p>
+        <h2 id="collab-title">협업 프로젝트</h2>
+      </div>
+      <div class="project-grid collab-grid">
+        <article class="project-card">
+          <img src="https://opengraph.githubassets.com/portfolio-ohapzone/yeyounglim-01/ohapzone-maple-portfolio" alt="오합지존 메이플 포트폴리오 GitHub 미리보기">
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="type">Hackathon Team Portfolio</span>
+              <span class="status">Team</span>
+            </div>
+            <h3>메이플 해커톤 포트폴리오</h3>
+            <p>Microsoft AI School 수료생들과 함께 2026 메커톤 지원을 위해 제작한 팀 포트폴리오 웹사이트입니다. 팀원의 기술 경험과 프로젝트 이력을 캐릭터 선택형 인터페이스로 구성했습니다.</p>
+            <div class="tags">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+              <span>Team Project</span>
+            </div>
+            <details class="project-detail">
+              <summary>상세 내용</summary>
+              <div class="detail-content">
+                <div class="detail-block">
+                  <strong>담당 범위</strong>
+                  <p>메커톤 지원용 팀 포트폴리오에서 팀원별 캐릭터 콘셉트와 비주얼 방향을 정리하고, 캐릭터 디자인 산출물 제작에 참여했습니다. Microsoft AI School 수료생들의 프로젝트 이력과 개성을 캐릭터 선택형 화면에 자연스럽게 담는 방향으로 기여했습니다.</p>
+                </div>
+                <p class="detail-evidence">산출물: 팀원 캐릭터 이미지와 메이플스토리 감성의 포트폴리오 비주얼 콘셉트.</p>
+              </div>
+            </details>
+            <div class="card-actions">
+              <a class="button small primary" href="https://github.com/yeyounglim-01/ohapzone-maple-portfolio" target="_blank" rel="noreferrer">
+                <i data-lucide="github"></i>
+                GitHub
+              </a>
+              <a class="button small secondary" href="https://yeyounglim-01.github.io/ohapzone-maple-portfolio/" target="_blank" rel="noreferrer">
+                <i data-lucide="external-link"></i>
+                사이트 열기
+              </a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <img src="https://opengraph.githubassets.com/portfolio-checkmate/ansrudwns/2nd-project" alt="CheckMate GitHub 미리보기">
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="type">RAG Contract Analysis</span>
+              <span class="status">Team</span>
+            </div>
+            <h3>CheckMate</h3>
+            <p>Azure OpenAI와 AI Search 기반 RAG로 계약서 독소조항을 검토하는 시스템입니다. Rule Engine과 LLM을 결합해 비용을 줄이고 근거 기반 응답의 안정성을 높였습니다.</p>
+            <div class="tags">
+              <span>FastAPI</span>
+              <span>Next.js</span>
+              <span>Azure OpenAI</span>
+              <span>RAG</span>
+            </div>
+            <details class="project-detail">
+              <summary>상세 내용</summary>
+              <div class="detail-content">
+                <div class="detail-block">
+                  <strong>담당 범위</strong>
+                  <p>Azure Language PII를 활용해 계약서 내 개인정보 위치를 추출하고, OCR 좌표와 매핑해 마스킹 이미지로 시각화하는 흐름을 구현했습니다. 또한 임대차·근로계약 관련 법률 데이터를 Azure AI Search에 적재해 RAG 검색 기반으로 계약 위험 설명에 필요한 근거를 제공하도록 구성했습니다.</p>
+                </div>
+                <div class="detail-block">
+                  <strong>아키텍처 구조</strong>
+                  <p>프론트엔드에서 업로드된 계약 문서를 FastAPI 백엔드가 받아 Azure Document Intelligence로 텍스트와 좌표를 추출합니다. 이후 PII 마스킹, Rule Engine 기반 1차 검증, Azure AI Search RAG, Azure OpenAI 리포트 생성을 거쳐 사용자가 이해할 수 있는 분석 결과와 다국어 요약을 제공합니다.</p>
+                </div>
+                <p class="detail-evidence">구현 기록: <code>backend/app/api/endpoints/analysis.py</code>, <code>rule_engine.py</code>, <code>labor_rules.py</code>, <code>rag.py</code>, README.</p>
+              </div>
+            </details>
+            <div class="card-actions">
+              <a class="button small primary" href="https://github.com/ansrudwns/2nd-project" target="_blank" rel="noreferrer">
+                <i data-lucide="github"></i>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
 
-        async function generateProjectIdea() {
-            loader.style.display = 'block';
-            aiIdeaContent.innerHTML = ''; // Clear previous content
-            aiIdeaContent.appendChild(loader);
+        <article class="project-card">
+          <img src="https://opengraph.githubassets.com/portfolio-aira/Theeo96/aira_backend" alt="Aira Backend GitHub 미리보기">
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="type">AI Voice Companion</span>
+              <span class="status">Team</span>
+            </div>
+            <h3>Aira Voice Companion</h3>
+            <p>3rd Project Modules에서 분리한 STT, 도구 호출, RAG 메모리 모듈을 기반으로 확장한 실시간 음성 컴패니언 서비스입니다. FastAPI WebSocket, Gemini Native Audio, 대화 메모리, Next.js 프론트 흐름을 포함합니다.</p>
+            <div class="tags">
+              <span>FastAPI</span>
+              <span>Next.js</span>
+              <span>WebSocket</span>
+              <span>RAG Memory</span>
+            </div>
+            <details class="project-detail">
+              <summary>상세 내용</summary>
+              <div class="detail-content">
+                <div class="detail-block">
+                  <strong>담당 범위</strong>
+                  <p>팀 프로젝트에서 맡은 음성 입력 처리, 의도 라우팅, 도구 호출, 장기 메모리 기능을 먼저 <code>3rd_Project_Modules</code> 레포에서 모듈 형태로 구현했습니다. 이후 해당 모듈의 구조를 Aira 백엔드에 통합해 사용자 발화를 실시간으로 분류하고, 교통·뉴스·날씨·일정 등 외부 컨텍스트를 응답에 주입하는 흐름으로 확장했습니다.</p>
+                </div>
+                <div class="detail-block">
+                  <strong>아키텍처 구조</strong>
+                  <p>FastAPI WebSocket이 음성 대화의 중심 게이트웨이 역할을 하고, Gemini Native Audio가 실시간 응답을 생성합니다. Intent Router와 Orchestrator가 발화 의도를 분기하고, 필요할 때 서울 실시간 정보, TMAP/ODSay 교통, 뉴스, 날씨, 메모리 컨텍스트를 결합해 응답 품질을 높이는 구조입니다.</p>
+                </div>
+                <p class="detail-evidence">구현 기록: <code>backend/server.py</code>, <code>modules/intent_router.py</code>, <code>modules/ws_orchestrator_service.py</code>, <code>project_status_summary.md</code>.</p>
+              </div>
+            </details>
+            <div class="card-actions">
+              <a class="button small primary" href="https://github.com/Theeo96/aira_backend" target="_blank" rel="noreferrer">
+                <i data-lucide="github"></i>
+                GitHub
+              </a>
+              <a class="button small secondary" href="https://github.com/ansrudwns/3rd_Project_Modules" target="_blank" rel="noreferrer">
+                <i data-lucide="blocks"></i>
+                3rd Modules
+              </a>
+            </div>
+          </div>
+        </article>
 
-            const apiKey = ""; // API 키는 비워 둡니다.
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            
-            const systemPrompt = "You are a creative mentor for aspiring AI and Embedded Systems engineers. Your goal is to provide inspiring and practical project ideas in Korean.";
-            const userQuery = "Generate a unique project idea that combines artificial intelligence with an embedded system. The idea should be suitable for a portfolio. Respond in Korean Markdown format with the following structure:\n\n**Project Title:** [Your Title Here]\n\n**Description:** [Your one-paragraph description here]\n\n**Key Technologies:**\n- Tech 1\n- Tech 2\n- Tech 3 and more";
+        <article class="project-card">
+          <img src="https://opengraph.githubassets.com/portfolio-snapq/jaehyeon0420/snapQ-fastapi" alt="SNAP-Q GitHub 미리보기">
+          <div class="card-body">
+            <div class="card-topline">
+              <span class="type">Computer Vision Estimate</span>
+              <span class="status">Team</span>
+            </div>
+            <h3>SNAP-Q</h3>
+            <p>차량 손상 이미지를 분석해 손상 유형, 면적, 확률 기반 수리비 범위를 산출하는 AI 서비스입니다. 팀 프로젝트에서 UI/UX 기획과 프론트엔드 개발 역할로 참여했습니다.</p>
+            <div class="tags">
+              <span>FastAPI</span>
+              <span>PyTorch</span>
+              <span>Azure Custom Vision</span>
+              <span>Docker</span>
+            </div>
+            <details class="project-detail">
+              <summary>상세 내용</summary>
+              <div class="detail-content">
+                <div class="detail-block">
+                  <strong>담당 범위</strong>
+                  <p>팀 프로젝트에서 UI/UX 기획과 프론트엔드 개발을 담당했습니다. 사용자 이미지 업로드부터 차량 손상 분석 결과 확인까지의 화면 흐름을 설계하고, AI 추론 결과가 사용자에게 이해되도록 서비스 경험을 구성하는 역할로 참여했습니다.</p>
+                </div>
+                <div class="detail-block">
+                  <strong>아키텍처 구조</strong>
+                  <p>연결된 GitHub 레포는 전체 SNAP-Q 서비스 중 FastAPI 기반 AI 추론 엔진입니다. React 프론트엔드와 Spring Boot 서버를 거쳐 전달된 차량 손상 이미지를 Azure Custom Vision으로 분류하고, Mask R-CNN으로 손상 영역을 탐지한 뒤 수리비 견적 JSON과 시각화 이미지를 반환하는 구조입니다.</p>
+                </div>
+                <p class="detail-evidence">구현 기록: README 팀원 표, <code>app/api/estimate.py</code>, <code>estimate_cv_service.py</code>, <code>estimate_ml_service.py</code>, Jenkinsfile.</p>
+              </div>
+            </details>
+            <div class="card-actions">
+              <a class="button small primary" href="https://github.com/jaehyeon0420/snapQ-fastapi" target="_blank" rel="noreferrer">
+                <i data-lucide="github"></i>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-            const payload = {
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-                contents: [{ parts: [{ text: userQuery }] }],
-            };
-            
-            try {
-                // Implementing exponential backoff for retries
-                let response;
-                let retries = 3;
-                let delay = 1000;
-                for (let i = 0; i < retries; i++) {
-                    response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload),
-                    });
-                    if (response.ok) break;
-                    await new Promise(res => setTimeout(res, delay));
-                    delay *= 2;
-                }
+    <section id="contact" class="section contact" aria-labelledby="contact-title">
+      <p class="section-kicker">Contact</p>
+      <h2 id="contact-title" class="sr-only">Contact links</h2>
+      <div class="hero-actions">
+        <a class="button primary" href="https://github.com/ansrudwns" target="_blank" rel="noreferrer">
+          <i data-lucide="github"></i>
+          ansrudwns GitHub
+        </a>
+        <a class="button secondary" href="https://m86865.tistory.com/" target="_blank" rel="noreferrer">
+          <i data-lucide="book-open"></i>
+          Blog
+        </a>
+        <a class="button secondary" href="https://www.linkedin.com/in/gyeong-june-mun-4bb9b6387" target="_blank" rel="noreferrer">
+          <i data-lucide="linkedin"></i>
+          LinkedIn
+        </a>
+        <a class="button secondary" href="mailto:m86865@naver.com">
+          <i data-lucide="mail"></i>
+          Email
+        </a>
+        <a class="button secondary" href="#top">
+          <i data-lucide="arrow-up"></i>
+          맨 위로
+        </a>
+      </div>
+    </section>
+  </main>
 
-                if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-                
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
-
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    const text = candidate.content.parts[0].text;
-                    // Simple Markdown to HTML conversion
-                    const htmlContent = text
-                        .replace(/\*\*Project Title:\*\*/g, '<h4>')
-                        .replace(/\*\*Description:\*\*/g, '</h4><p class="text-gray-400">')
-                        .replace(/\*\*Key Technologies:\*\*/g, '</p><h4>주요 기술</h4><ul class="list-disc list-inside text-gray-400">')
-                        .replace(/- /g, '<li>')
-                        .replace(/\n/g, '<br>')
-                        .replace(/<\/li><br>/g, '</li>') + '</ul>';
-
-                    aiIdeaContent.innerHTML = htmlContent;
-                } else {
-                    aiIdeaContent.innerHTML = '<p>아이디어를 생성하는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>';
-                }
-            } catch (error) {
-                console.error("Error calling Gemini API:", error);
-                aiIdeaContent.innerHTML = '<p>오류가 발생했습니다. 네트워크 연결을 확인하거나 잠시 후 다시 시도해 주세요.</p>';
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-    </script>
+  <footer class="footer">
+    <span>© 2026 문경준</span>
+    <span>Built with HTML, CSS, JavaScript</span>
+  </footer>
 </body>
 </html>
-
-
