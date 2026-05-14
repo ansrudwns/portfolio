@@ -1,10 +1,14 @@
-# AI Developer Portfolio
+# 문경준 Portfolio
 
-인공지능, 데이터분석, 임베디드 개발 전문가
+AI 서비스 설계, RAG/LLMOps, 컴퓨터 비전, 이상 탐지 프로젝트를 정리한 포트폴리오입니다.
 
-## 기술스택
-- AI, ML, DL
+## Live Site
 
-## 라이브 데모
-- 포트폴리오 사이트 https://ansrudwns.github.io/portfolio/
-- 반응속도 게임 사이트 https://ansrudwns.github.io/portfolio/game.html
+- [포트폴리오 열기](https://ansrudwns.github.io/portfolio/)
+
+## Contents
+
+- 연구 경험: CCTV 기반 낙석 탐지, 터널 MWD 이상 탐지
+- 개인 프로젝트: News2Skill, KRAFTON AI R&D Hackathon
+- 협업 프로젝트: CheckMate, Aira Voice Companion, SNAP-Q, 메이플 해커톤 포트폴리오
+- 교육 및 인증: Microsoft AI School, AI Chip Camp, Azure AI Fundamentals, Google Analytics Certification
