@@ -1,0 +1,15 @@
+# Local backups
+_backup/
+
+# Temporary working files
+tmp/
+
+# Portfolio planning and drafting notes
+기술선택_비교_초안.md
+워크시트_개선내역.md
+포트폴리오 추가사항.txt
+포트폴리오_고도화플랜.md
+포트폴리오_추가사항.md
+포트폴리오_콘텐츠_구성안.md
+프로젝트_질문_워크시트.md
+프로젝트_질문_워크시트_v2.md

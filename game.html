@@ -1,60 +1,253 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>반응속도 테스트 게임</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HTML, CSS, JavaScript로 만든 반응속도 테스트 게임입니다.">
+  <title>반응속도 테스트 게임 | 문경준</title>
   <style>
-    :root{
-      --bg:#0f1226; --panel:#171a33; --accent:#7c4dff; --ok:#21c07a; --warn:#ffb020; --bad:#ff4d6d; --muted:#9aa1b2;
+    :root {
+      --bg: #101114;
+      --panel: rgba(255, 255, 255, 0.08);
+      --line: rgba(255, 255, 255, 0.16);
+      --text: #f5f1e8;
+      --muted: #b8b1a4;
+      --accent: #54d18a;
+      --warn: #ffbd59;
+      --bad: #ef6f6c;
+      --radius: 8px;
     }
-    *{box-sizing:border-box}
-    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Pretendard,Apple SD Gothic Neo,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#0c0f22,#111538 35%,#0f1226); color:#e9ecf1; min-height:100svh; display:flex; align-items:center; justify-content:center;}
-    .wrap{width:min(980px,92vw);}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.08); box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); border-radius:22px; overflow:hidden}
-    header{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 22px; border-bottom:1px solid rgba(255,255,255,.06)}
-    header h1{font-size:20px; margin:0; letter-spacing:.3px}
-    .pill{display:inline-flex; align-items:center; gap:8px; background:rgba(124,77,255,.15); color:#cfb8ff; border:1px solid rgba(124,77,255,.45); padding:6px 10px; border-radius:999px; font-size:12px}
-    .controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
-    .controls > *{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#e9ecf1; padding:10px 12px; border-radius:12px; font-size:14px}
-    select{appearance:none}
-    button.primary{background:linear-gradient(180deg,var(--accent),#6236ff); border:none; padding:10px 14px; font-weight:600}
-    button.secondary{background:rgba(255,255,255,.06);}
-    button:disabled{opacity:.5; cursor:not-allowed}
 
-    .stage{position:relative; height:360px; display:grid; place-items:center; user-select:none; cursor:pointer}
-    .stage .msg{font-size:28px; text-align:center; line-height:1.35}
-    .stage .sub{margin-top:10px; font-size:14px; color:var(--muted)}
-    .stage.ready{background:#162030}
-    .stage.wait{background:#2a2436}
-    .stage.go{background:#093a2e}
-    .stage.false{background:#3a0f1f}
+    * { box-sizing: border-box; }
 
-    .grid{display:grid; grid-template-columns:1.2fr .8fr; gap:16px; padding:16px}
-    @media (max-width:860px){.grid{grid-template-columns:1fr}}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(84, 209, 138, 0.2), transparent 28rem),
+        radial-gradient(circle at 82% 15%, rgba(255, 189, 89, 0.16), transparent 24rem),
+        linear-gradient(135deg, #101114, #181510 48%, #111916);
+      color: var(--text);
+    }
 
-    .panel{background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:14px}
-    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
-    .stat{background:rgba(0,0,0,.2); border:1px solid rgba(255,255,255,.06); padding:12px; border-radius:14px; text-align:center}
-    .stat h3{margin:0; font-size:13px; color:#b6bccb; font-weight:500}
-    .stat p{margin:6px 0 0; font-size:22px; font-weight:700}
+    button, select {
+      font: inherit;
+    }
 
-    .list{display:flex; flex-direction:column; gap:8px; max-height:210px; overflow:auto; scrollbar-width:thin}
-    .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); font-size:12px}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .wrap {
+      width: min(980px, 100%);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+    }
 
-    .footer{padding:12px 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; border-top:1px solid rgba(255,255,255,.06)}
-    .hint{color:#b7bfd0; font-size:12px}
-    .k{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; background:rgba(255,255,255,.08); padding:3px 6px; border-radius:6px; border:1px solid rgba(255,255,255,.15)}
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chip,
+    button,
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 2.35rem;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    select {
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font-weight: 700;
+      outline: 0;
+    }
+
+    option {
+      color: #111;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button.primary {
+      border-color: rgba(84, 209, 138, 0.55);
+      background: var(--accent);
+      color: #07120c;
+    }
+
+    .stage {
+      display: grid;
+      min-height: 360px;
+      place-items: center;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background 160ms ease;
+    }
+
+    .stage.ready { background: rgba(255, 255, 255, 0.04); }
+    .stage.wait { background: rgba(255, 189, 89, 0.15); }
+    .stage.go { background: rgba(84, 209, 138, 0.18); }
+    .stage.false { background: rgba(239, 111, 108, 0.2); }
+
+    .msg {
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .sub {
+      margin-top: 0.75rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .panel {
+      min-height: 220px;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, 0.14);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .list {
+      display: grid;
+      gap: 0.5rem;
+      max-height: 220px;
+      margin-top: 0.7rem;
+      overflow: auto;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.7rem;
+    }
+
+    .stat {
+      padding: 0.8rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.055);
+      text-align: center;
+    }
+
+    .stat h3 {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .stat p {
+      margin: 0.35rem 0 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+      padding: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .key {
+      padding: 0.16rem 0.35rem;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    @media (max-width: 780px) {
+      header,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .controls {
+        width: 100%;
+      }
+
+      .stage {
+        min-height: 300px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap card" id="app">
+  <div class="wrap" id="app">
     <header>
-      <h1>⚡ 반응속도 테스트</h1>
-      <span class="pill">SPA • No libs • LocalStorage</span>
+      <div>
+        <h1>반응속도 테스트 게임</h1>
+        <div class="sub">신호가 초록색으로 바뀌는 순간 클릭하거나 Space를 누르세요.</div>
+      </div>
       <div class="controls">
+        <a class="back" href="index.html">포트폴리오</a>
         <label class="chip">라운드
           <select id="rounds">
             <option value="3">3</option>
@@ -70,215 +263,224 @@
             <option value="pro">프로</option>
           </select>
         </label>
-        <button class="secondary" id="resetBtn" title="결과 초기화">초기화</button>
+        <button id="resetBtn">초기화</button>
         <button class="primary" id="startBtn">시작</button>
       </div>
     </header>
 
-    <div class="stage ready" id="stage" tabindex="0" aria-label="테스트 영역">
-      <div class="msg" id="msg">버튼을 누르거나 무대(초록) 클릭/스페이스바로 반응하세요
-        <div class="sub">시작을 누르면 무작위 지연 후 "지금!"이 뜹니다. 너무 빨리 클릭하면 실패 처리됩니다.</div>
-      </div>
-    </div>
+    <section class="stage ready" id="stage" tabindex="0" aria-label="반응속도 테스트 영역">
+      <div class="msg" id="msg"></div>
+    </section>
 
-    <div class="grid">
+    <section class="grid" aria-label="게임 기록과 통계">
       <div class="panel">
-        <div class="row" style="margin-bottom:8px">
+        <div class="row">
           <strong>라운드 기록</strong>
-          <span id="roundInfo" class="hint">0 / 0</span>
+          <span id="roundInfo" class="sub">0 / 0</span>
         </div>
         <div class="list" id="history"></div>
       </div>
 
       <div class="panel">
         <strong>통계</strong>
-        <div class="stats" style="margin-top:10px">
-          <div class="stat"><h3>평균</h3><p id="avg">– ms</p></div>
-          <div class="stat"><h3>최고</h3><p id="best">– ms</p></div>
+        <div class="stats">
+          <div class="stat"><h3>평균</h3><p id="avg">-- ms</p></div>
+          <div class="stat"><h3>최고</h3><p id="best">-- ms</p></div>
           <div class="stat"><h3>실패</h3><p id="fails">0</p></div>
         </div>
-        <div style="margin-top:12px" class="hint">개인 최고: <span id="pb">– ms</span></div>
-        <div style="margin-top:8px" class="hint">로컬 리더보드</div>
+        <div class="sub">개인 최고: <span id="pb">-- ms</span></div>
         <div class="list" id="leader"></div>
       </div>
-    </div>
+    </section>
 
-    <div class="footer">
-      <div class="hint">조작법: <span class="k">Space</span> 또는 스테이지 클릭 = 반응 • <span class="k">Enter</span> = 시작/다음 • <span class="k">R</span> = 초기화</div>
-      <div class="hint">난이도 설명 — 보통: 700–2000ms, 어려움: 1200–3500ms (랜덤 추가 유혹), 프로: 2000–5500ms (멘탈 테스트)</div>
-    </div>
+    <footer class="footer">
+      <span><span class="key">Space</span> 반응 · <span class="key">Enter</span> 시작/다음 · <span class="key">R</span> 초기화</span>
+      <span>Vanilla JS · LocalStorage</span>
+    </footer>
   </div>
 
-<script>
-(() => {
-  const el = (id) => document.getElementById(id);
-  const stage = el('stage');
-  const msg = el('msg');
-  const startBtn = el('startBtn');
-  const resetBtn = el('resetBtn');
-  const roundsSel = el('rounds');
-  const modeSel = el('mode');
-  const history = el('history');
-  const roundInfo = el('roundInfo');
-  const avgEl = el('avg');
-  const bestEl = el('best');
-  const failsEl = el('fails');
-  const pbEl = el('pb');
-  const leader = el('leader');
+  <script>
+    (() => {
+      const el = (id) => document.getElementById(id);
+      const stage = el("stage");
+      const msg = el("msg");
+      const startBtn = el("startBtn");
+      const resetBtn = el("resetBtn");
+      const roundsSel = el("rounds");
+      const modeSel = el("mode");
+      const history = el("history");
+      const roundInfo = el("roundInfo");
+      const avgEl = el("avg");
+      const bestEl = el("best");
+      const failsEl = el("fails");
+      const pbEl = el("pb");
+      const leader = el("leader");
 
-  // --- State ---
-  const S = { idle:'idle', waiting:'waiting', go:'go', false:'false' };
-  let state = S.idle;
-  let config = { total: Number(roundsSel.value), mode: modeSel.value };
-  let timer = null, startedAt = 0; // timestamps
-  let results = []; // each: {ms, fail:boolean}
-  let falseStarts = 0;
+      const stateName = { idle: "idle", waiting: "waiting", go: "go", false: "false" };
+      let state = stateName.idle;
+      let totalRounds = Number(roundsSel.value);
+      let timer = null;
+      let startedAt = 0;
+      let results = [];
+      let falseStarts = 0;
 
-  // --- Local storage helpers ---
-  const LS_KEY = 'rt_leaderboard_v2';
-  const readLB = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)||'[]'); } catch { return []; } };
-  const writeLB = (arr) => localStorage.setItem(LS_KEY, JSON.stringify(arr.slice(0, 20)));
+      const storageKey = "reaction_speed_leaderboard_v1";
+      const readBoard = () => {
+        try {
+          return JSON.parse(localStorage.getItem(storageKey) || "[]");
+        } catch {
+          return [];
+        }
+      };
+      const writeBoard = (rows) => localStorage.setItem(storageKey, JSON.stringify(rows.slice(0, 10)));
+      const mean = (values) => values.length ? values.reduce((a, b) => a + b, 0) / values.length : NaN;
+      const fmt = (value) => Number.isFinite(value) ? `${Math.round(value)} ms` : "-- ms";
 
-  function fmt(n){ return Number.isFinite(n) ? Math.round(n) + ' ms' : '– ms'; }
-  function mean(nums){ return nums.length ? nums.reduce((a,b)=>a+b,0)/nums.length : NaN; }
-  function pickDelay(mode){
-    if(mode==='normal') return 700 + Math.random()*1300; // 0.7–2.0s
-    if(mode==='hard'){
-      // add a tempting early flicker chance
-      const base = 900 + Math.random()*1800; // 0.9–2.7s
-      return base + (Math.random()<0.35? 600+Math.random()*900 : 0);
-    }
-    // pro: long and evil
-    return 1600 + Math.random()*3900; // 1.6–5.5s
-  }
+      function delayFor(mode) {
+        if (mode === "normal") return 700 + Math.random() * 1300;
+        if (mode === "hard") return 1000 + Math.random() * 2200;
+        return 1800 + Math.random() * 3800;
+      }
 
-  function setState(next){
-    state = next;
-    stage.classList.remove('ready','wait','go','false');
-    if(next===S.idle){
-      stage.classList.add('ready');
-      msg.innerHTML = '준비 완료. <strong>시작</strong>을 누르세요.' + hint();
-    } else if(next===S.waiting){
-      stage.classList.add('wait');
-      msg.innerHTML = '대기… <br><span class="sub">초록색으로 바뀌면 바로 반응!</span>';
-    } else if(next===S.go){
-      stage.classList.add('go');
-      msg.innerHTML = '<strong>지금!</strong><div class="sub">클릭 또는 스페이스바</div>';
-    } else if(next===S.false){
-      stage.classList.add('false');
-      msg.innerHTML = '너무 빨랐어요 🥲<div class="sub">신호 전 클릭은 실패로 기록됩니다</div>';
-    }
-  }
+      function hint() {
+        return '<div class="sub">클릭 또는 Space로 반응하고, Enter로 다음 라운드를 시작합니다.</div>';
+      }
 
-  function hint(){ return '<div class="sub">(Space/클릭으로 반응, Enter로 다음 라운드)</div>'; }
+      function setState(next) {
+        state = next;
+        stage.classList.remove("ready", "wait", "go", "false");
+        if (next === stateName.idle) {
+          stage.classList.add("ready");
+          msg.innerHTML = `준비 완료${hint()}`;
+        }
+        if (next === stateName.waiting) {
+          stage.classList.add("wait");
+          msg.innerHTML = '대기 중<div class="sub">초록색 신호가 나오기 전에는 누르지 마세요.</div>';
+        }
+        if (next === stateName.go) {
+          stage.classList.add("go");
+          msg.innerHTML = "지금!";
+        }
+        if (next === stateName.false) {
+          stage.classList.add("false");
+          msg.innerHTML = '너무 빨랐어요<div class="sub">신호 전 입력은 실패로 기록됩니다.</div>';
+        }
+      }
 
-  function updatePanels(){
-    roundInfo.textContent = `${Math.min(results.length, config.total)} / ${config.total}`;
-    // history
-    history.innerHTML = '';
-    results.forEach((r, i) => {
-      const div = document.createElement('div');
-      div.className = 'row';
-      div.innerHTML = `<span class="chip">#${i+1}</span>` +
-        (r.fail ? `<span class="chip" style="border-color:rgba(255,77,109,.5); background:rgba(255,77,109,.1); color:#ff9db0">실패</span>`
-                : `<span class="chip" style="border-color:rgba(33,192,122,.5); background:rgba(33,192,122,.1); color:#9af0cd">${Math.round(r.ms)} ms</span>`);
-      history.appendChild(div);
-    });
+      function updatePanels() {
+        roundInfo.textContent = `${Math.min(results.length, totalRounds)} / ${totalRounds}`;
+        history.innerHTML = "";
+        results.forEach((result, index) => {
+          const row = document.createElement("div");
+          row.className = "row chip";
+          row.innerHTML = result.fail
+            ? `<span>#${index + 1}</span><strong style="color: var(--bad)">실패</strong>`
+            : `<span>#${index + 1}</span><strong style="color: var(--accent)">${Math.round(result.ms)} ms</strong>`;
+          history.appendChild(row);
+        });
 
-    const valids = results.filter(r=>!r.fail).map(r=>r.ms);
-    avgEl.textContent = fmt(mean(valids));
-    bestEl.textContent = fmt(Math.min(...valids));
-    failsEl.textContent = String(falseStarts);
+        const valid = results.filter((result) => !result.fail).map((result) => result.ms);
+        avgEl.textContent = fmt(mean(valid));
+        bestEl.textContent = fmt(Math.min(...valid));
+        failsEl.textContent = String(falseStarts);
 
-    const lb = readLB();
-    pbEl.textContent = lb.length? (lb[0].best+' ms') : '– ms';
-    leader.innerHTML = '';
-    lb.forEach((e,idx)=>{
-      const row = document.createElement('div');
-      row.className = 'row';
-      row.innerHTML = `<span class="chip">${idx+1}위</span><span class="chip">최고 ${e.best} ms</span><span class="chip">평균 ${e.avg} ms</span><span class="chip">${e.rounds}R</span><span class="chip">${new Date(e.ts).toLocaleString()}</span>`;
-      leader.appendChild(row);
-    });
-  }
+        const board = readBoard();
+        pbEl.textContent = board.length ? `${board[0].best} ms` : "-- ms";
+        leader.innerHTML = "";
+        board.forEach((entry, index) => {
+          const row = document.createElement("div");
+          row.className = "row chip";
+          row.innerHTML = `<span>${index + 1}위</span><span>최고 ${entry.best} ms · 평균 ${entry.avg} ms</span>`;
+          leader.appendChild(row);
+        });
+      }
 
-  function startRound(){
-    if(results.length >= config.total){
-      // series finished
-      finalize();
-      return;
-    }
-    setState(S.waiting);
-    clearTimeout(timer);
-    const delay = pickDelay(config.mode);
-    timer = setTimeout(()=>{
-      setState(S.go);
-      startedAt = performance.now();
-    }, delay);
-  }
+      function finishSet() {
+        const valid = results.filter((result) => !result.fail).map((result) => Math.round(result.ms));
+        if (valid.length) {
+          const entry = {
+            best: Math.min(...valid),
+            avg: Math.round(mean(valid)),
+            ts: Date.now()
+          };
+          const board = readBoard();
+          board.push(entry);
+          board.sort((a, b) => a.best - b.best || a.avg - b.avg);
+          writeBoard(board);
+        }
+        updatePanels();
+        setState(stateName.idle);
+        msg.innerHTML = `세트 완료<div class="sub">평균 ${avgEl.textContent} · 최고 ${bestEl.textContent}</div>`;
+      }
 
-  function finalize(){
-    // compute stats, save to leaderboard
-    const valids = results.filter(r=>!r.fail).map(r=>Math.round(r.ms));
-    const best = valids.length ? Math.min(...valids) : null;
-    const avg = valids.length ? Math.round(mean(valids)) : null;
-    const entry = { best: best??'–', avg: avg??'–', rounds: config.total, fails: falseStarts, ts: Date.now() };
-    const lb = readLB();
-    if(best!==null){
-      // insert sorted by best ascending
-      lb.push(entry);
-      lb.sort((a,b)=> (a.best??99999) - (b.best??99999) || (a.avg??99999) - (b.avg??99999));
-      writeLB(lb);
-    }
-    updatePanels();
-    setState(S.idle);
-    msg.innerHTML = `세트 완료! <br>평균 <strong>${fmt(avg)}</strong> • 최고 <strong>${fmt(best)}</strong>` + hint();
-  }
+      function startRound() {
+        if (results.length >= totalRounds) {
+          finishSet();
+          return;
+        }
+        clearTimeout(timer);
+        setState(stateName.waiting);
+        timer = setTimeout(() => {
+          startedAt = performance.now();
+          setState(stateName.go);
+        }, delayFor(modeSel.value));
+      }
 
-  function onReact(){
-    if(state===S.waiting){
-      // false start
-      clearTimeout(timer);
-      falseStarts++;
-      results.push({ms:0, fail:true});
-      setState(S.false);
+      function react() {
+        if (state === stateName.waiting) {
+          clearTimeout(timer);
+          falseStarts += 1;
+          results.push({ fail: true, ms: 0 });
+          setState(stateName.false);
+          updatePanels();
+          return;
+        }
+        if (state === stateName.go) {
+          results.push({ fail: false, ms: performance.now() - startedAt });
+          updatePanels();
+          setState(stateName.idle);
+          msg.innerHTML = `기록: <strong>${Math.round(results.at(-1).ms)} ms</strong><div class="sub">Enter로 다음 라운드를 시작하세요.</div>`;
+        }
+      }
+
+      startBtn.addEventListener("click", () => {
+        if (results.length >= totalRounds) {
+          results = [];
+          falseStarts = 0;
+          updatePanels();
+        }
+        startRound();
+      });
+
+      resetBtn.addEventListener("click", () => {
+        clearTimeout(timer);
+        results = [];
+        falseStarts = 0;
+        updatePanels();
+        setState(stateName.idle);
+      });
+
+      stage.addEventListener("pointerdown", react);
+      roundsSel.addEventListener("change", () => {
+        totalRounds = Number(roundsSel.value);
+        resetBtn.click();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.code === "Space") {
+          event.preventDefault();
+          react();
+        }
+        if (event.code === "Enter") {
+          event.preventDefault();
+          if (state === stateName.idle || state === stateName.false) startRound();
+        }
+        if (event.key === "r" || event.key === "R") resetBtn.click();
+      });
+
       updatePanels();
-    } else if(state===S.go){
-      const rt = performance.now() - startedAt;
-      results.push({ms:rt, fail:false});
-      updatePanels();
-      setState(S.idle);
-      msg.innerHTML = `기록: <strong>${Math.round(rt)} ms</strong><div class="sub">Enter로 다음 라운드 • Space로도 가능</div>`;
-    }
-  }
-
-  // --- Event wiring ---
-  startBtn.addEventListener('click', ()=>{
-    // reset between sets
-    if(results.length===0 || results.length>=config.total){
-      results = []; falseStarts = 0; updatePanels();
-    }
-    startRound();
-  });
-  resetBtn.addEventListener('click', ()=>{ results = []; falseStarts = 0; updatePanels(); setState(S.idle); });
-
-  stage.addEventListener('pointerdown', (e)=>{
-    if(e.pointerType==='touch'){ stage.setPointerCapture(e.pointerId); }
-    onReact();
-  });
-
-  document.addEventListener('keydown', (e)=>{
-    if(e.code==='Space'){ e.preventDefault(); onReact(); }
-    else if(e.code==='Enter'){ e.preventDefault(); if(state===S.idle) startRound(); }
-    else if(e.key==='r' || e.key==='R'){ resetBtn.click(); }
-  });
-
-  roundsSel.addEventListener('change', ()=>{ config.total = Number(roundsSel.value); updatePanels(); });
-  modeSel.addEventListener('change', ()=>{ config.mode = modeSel.value; });
-
-  // First paint
-  updatePanels();
-  setState(S.idle);
-})();
-</script>
+      setState(stateName.idle);
+    })();
+  </script>
 </body>
 </html>
