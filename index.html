@@ -30,9 +30,9 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
   <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" defer></script>
-  <script src="script.js?v=9" defer></script>
+  <script src="script.js?v=10" defer></script>
 
   <script type="application/ld+json">
   {
@@ -151,60 +151,6 @@
       </p>
     </section>
 
-    <section class="section credentials" aria-labelledby="credentials-title">
-      <div class="section-heading">
-        <p class="section-kicker" data-i18n="cred.kicker">Credentials</p>
-        <h2 id="credentials-title">Certifications</h2>
-      </div>
-      <div class="credential-grid">
-        <article class="credential-item">
-          <span class="credential-name">Microsoft Certified: Azure AI Fundamentals</span>
-          <span class="credential-meta">Microsoft · 2026.01.23</span>
-        </article>
-        <article class="credential-item">
-          <span class="credential-name">Google Analytics Certification</span>
-          <span class="credential-meta">Google · 2026.04.11</span>
-        </article>
-        <article class="credential-item">
-          <span class="credential-name">ADsP (데이터분석 준전문가)</span>
-          <span class="credential-meta">한국데이터산업진흥원 · 2026.06 · ADsP-049016802</span>
-        </article>
-        <article class="credential-item">
-          <span class="credential-name">6Sigma Green Belt</span>
-          <span class="credential-meta">한국자격검정평가진흥원 · 2026.03.24 · 등록번호 2023-005394</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="section credentials" aria-labelledby="training-title">
-      <div class="section-heading">
-        <p class="section-kicker" data-i18n="train.kicker">Training</p>
-        <h2 id="training-title" data-i18n="train.title">교육 이수</h2>
-      </div>
-      <div class="credential-grid">
-        <article class="credential-item">
-          <span class="credential-name">AWS Cloud Solutions Architect</span>
-          <span class="credential-meta">Amazon Web Services · 62h · EC2·S3·VPC·IAM, 3-tier/서버리스 설계</span>
-        </article>
-        <article class="credential-item">
-          <span class="credential-name">AWS Generative AI Applications</span>
-          <span class="credential-meta">Amazon Web Services · 18h · Bedrock, 프롬프트 엔지니어링, Guardrails</span>
-        </article>
-        <article class="credential-item">
-          <span class="credential-name">Mathematics for Machine Learning</span>
-          <span class="credential-meta">Imperial College London · 58h · 선형대수, 다변수 미적분, PCA</span>
-        </article>
-        <article class="credential-item">
-          <span class="credential-name">Microsoft AI School</span>
-          <span class="credential-meta">Microsoft · 956h · Azure AI, RAG, OCR, 객체탐지, 클라우드 배포</span>
-        </article>
-        <article class="credential-item">
-          <span class="credential-name">AI 반도체 활용·응용 교육 (AI Chip Camp)</span>
-          <span class="credential-meta">KAIT · 12h · LLM 연산구조, LPU 아키텍처, 추론 성능 관점</span>
-        </article>
-      </div>
-    </section>
-
     <section class="section" aria-labelledby="skills-title">
       <div class="section-heading">
         <p class="section-kicker" data-i18n="skills.kicker">Core Skills</p>
@@ -299,7 +245,7 @@
                       </div>
                       <div class="detail-block">
                         <strong data-i18n="exp.mwdEvalH">평가 방식</strong>
-                        <p data-i18n="exp.mwdEval">예측 위험 구간과 RMR 저하 구간을 0.5m depth-bin 단위로 비교해 Precision, Recall, F1 Score, Accuracy, OMC를 산출했습니다. 이 과정을 통해 현장별로 안정적인 feature 조합과 모델을 확인했습니다.</p>
+                        <p data-i18n="exp.mwdEval">예측 위험 구간과 RMR 저하 구간을 0.5m depth-bin 단위로 비교해 Precision, Recall, F1 Score와 Accuracy를 산출했습니다. 현장별 데이터에서 feature 조합과 모델에 따른 탐지 결과의 차이를 확인했습니다.</p>
                       </div>
                       <p class="detail-evidence" data-i18n="exp.mwdEvidence">구현 기록: IF/LOF/OCSVM 실험 GUI, depth-bin 평가, 결과 CSV와 시각화 그래프.</p>
                     </div>
@@ -331,9 +277,9 @@
             <h3>News2Skill</h3>
             <p data-i18n="proj.n2sDesc">AI 기술 동향을 수집해 실행 가능한 Skills와 설계 기록으로 전환하는 개인 R&D 지식 파이프라인입니다.</p>
             <ul class="project-points">
-              <li data-i18n="proj.n2sP1">GitHub Actions 기반 AI 뉴스 수집과 로컬 LLM 에이전트 처리 흐름 설계</li>
+              <li data-i18n="proj.n2sP1">GitHub Actions 수동 실행 기반 AI 뉴스 수집과 로컬 LLM 에이전트 처리 흐름 설계</li>
               <li data-i18n="proj.n2sP2">Human-in-the-loop 승인 단계를 두어 지식 베이스 흡수 여부를 통제</li>
-              <li data-i18n="proj.n2sP3">정적 감사, HMAC provenance, downgrade 방지로 생성물 신뢰성 관리</li>
+              <li data-i18n="proj.n2sP3">정적 감사와 provenance 검증, downgrade 방지로 생성물 반영 과정 통제</li>
             </ul>
             <div class="tags">
               <span>Python</span>
@@ -346,13 +292,13 @@
               <div class="detail-content">
                 <div class="detail-block">
                   <strong data-i18n="proj.n2sScopeH">구현 범위</strong>
-                  <p data-i18n="proj.n2sScope">GitHub Actions로 AI 뉴스 후보를 수집하고, 로컬 LLM 워크플로우에서 초안 생성·승인·커밋까지 이어지는 지식화 파이프라인을 설계했습니다.</p>
+                  <p data-i18n="proj.n2sScope">필요할 때 GitHub Actions를 수동 실행해 AI 뉴스 후보를 수집하고, 로컬 LLM 워크플로우에서 분석·초안 생성·사람의 승인·지식 자산 반영으로 이어지는 파이프라인을 설계했습니다.</p>
                 </div>
                 <div class="detail-block">
                   <strong data-i18n="proj.n2sTrustH">신뢰성 장치</strong>
-                  <p data-i18n="proj.n2sTrust">생성물 서명, 정적 감사, 다운그레이드 방지 검사를 두어 자동화 결과가 바로 반영되지 않고 검증 단계를 거치도록 구성했습니다.</p>
+                  <p data-i18n="proj.n2sTrust">정적 감사, provenance 검증, 다운그레이드 방지 검사를 두어 LLM 생성물이 바로 반영되지 않고 사람의 승인과 검증 단계를 거치도록 구성했습니다.</p>
                 </div>
-                <p class="detail-evidence">구현 기록: <code>.github/workflows</code>, <code>scripts/sign_drafts.py</code>, <code>scripts/audit_index.py</code>, <code>.agents/workflows</code>.</p>
+                <p class="detail-evidence" data-i18n="proj.n2sEvidence">구현 기록: <code>.github/workflows</code>, <code>scripts/sign_drafts.py</code>, <code>scripts/audit_index.py</code>, <code>.agents/workflows</code>.</p>
               </div>
             </details>
             <div class="card-actions">
@@ -375,8 +321,8 @@
             <p data-i18n="proj.kraftonDesc">KRAFTON AI R&D Hackathon 본선 진출 경험을 문제별 풀이와 회고로 정리한 개인 아카이브입니다.</p>
             <ul class="project-points">
               <li data-i18n="proj.kraftonP1">예선 MultiplierBoard, SparseTap과 본선 Written Exam, BattlePredict, VideoAgent 풀이 정리</li>
-              <li data-i18n="proj.kraftonP2">대회 제출본과 대회 직후 개선본을 분리해 풀이의 변화와 한계를 기록</li>
-              <li data-i18n="proj.kraftonP3">주최자 후기 기반으로 출제 의도, 문제 구조, 사후 개선 방향 분석</li>
+              <li data-i18n="proj.kraftonP2">대회 제출본과 실제로 다시 실행한 대회 직후 개선 코드를 분리해 변화와 한계를 기록</li>
+              <li data-i18n="proj.kraftonP3">주최자 후기 반영 버전은 구현 완료본과 구분해 후속 계획으로 명시</li>
             </ul>
             <div class="tags">
               <span>AI Steering</span>
@@ -390,13 +336,13 @@
               <div class="detail-content">
                 <div class="detail-block">
                   <strong data-i18n="proj.kraftonOrgH">정리 방식</strong>
-                  <p data-i18n="proj.kraftonOrg">예선 Day 1·2, 본선 Day 1·2 문제를 대회 제출본과 대회 직후 개선본으로 구분해 풀이 흐름과 한계를 남겼습니다.</p>
+                  <p data-i18n="proj.kraftonOrg">예선·본선 문제를 대회 제출본, 주최자 후기 공개 전 직접 구현·실행한 개선본, 후기 반영 후속 계획으로 구분해 기록했습니다.</p>
                 </div>
                 <div class="detail-block">
                   <strong data-i18n="proj.kraftonRepH">대표 문제</strong>
-                  <p data-i18n="proj.kraftonRep">VideoAgent는 영상 분할, 프레임 추출, 요약 병합 흐름으로 정리했고, BattlePredict는 Bradley-Terry와 Hungarian matching 기반 접근을 기록했습니다.</p>
+                  <p data-i18n="proj.kraftonRep">VideoAgent는 대회 후 Vertex AI 기반 파이프라인으로 재구성하고 재시도·중간 결과 저장·파일 정리를 보강했습니다. 개선 버전별 반복 실행 시간은 약 190~666초로 기록했고, 강제 타임아웃과 실패 태스크 취소, 정답 평가셋은 후속 과제로 남겼습니다.</p>
                 </div>
-                <p class="detail-evidence">구현 기록: 문제별 README, VideoAgent FFmpeg 처리 코드, BattlePredict <code>correct_solve.py</code>, SparseTap GF(2) 풀이.</p>
+                <p class="detail-evidence" data-i18n="proj.kraftonEvidence">구현 기록: 문제별 README, VideoAgent FFmpeg 처리 코드, BattlePredict <code>correct_solve.py</code>, SparseTap GF(2) 풀이.</p>
               </div>
             </details>
             <div class="card-actions">
@@ -424,11 +370,11 @@
               <span class="status" data-i18n="collab.busanStatus">Award</span>
             </div>
             <h3>부산어보 (Busan-eobo)</h3>
-            <p data-i18n="collab.busanDesc">Codex 커뮤니티가 주최한 Busan Ralphton 해커톤에서 팀으로 기획·개발한 부산 낚시 정보 서비스입니다. Host Voting Award를 수상했고, 대회 이후에도 실제 서비스 출시를 목표로 고도화를 이어가고 있습니다.</p>
+            <p data-i18n="collab.busanDesc">Codex 커뮤니티가 주최한 Busan Ralphton 해커톤에서 팀으로 기획·개발한 부산 낚시 정보 서비스입니다. Host Voting Award를 수상한 뒤 일회성 데모에 그치지 않고 실제 서비스로 발전시켜 운영하고 있습니다.</p>
             <ul class="project-points">
               <li data-i18n="collab.busanP1">팀 단위로 서비스 기획부터 개발까지 참여</li>
               <li data-i18n="collab.busanP2">해커톤 Host Voting Award 수상</li>
-              <li data-i18n="collab.busanP3">대회 후 실서비스 출시를 목표로 기능 고도화 진행 중</li>
+              <li data-i18n="collab.busanP3">대회 후 기능을 고도화해 실제 웹 서비스로 운영</li>
             </ul>
             <div class="tags">
               <span>Hackathon</span>
@@ -438,43 +384,6 @@
             </div>
             <div class="card-actions">
               <a class="button small primary" href="https://www.busaneobo.co.kr/" target="_blank" rel="noreferrer">
-                <i data-lucide="external-link"></i>
-                <span data-i18n="collab.openSite">사이트 열기</span>
-              </a>
-            </div>
-          </div>
-        </article>
-        <article class="project-card">
-          <img src="https://opengraph.githubassets.com/portfolio-ohapzone/yeyounglim-01/ohapzone-maple-portfolio" alt="오합지존 메이플 포트폴리오 GitHub 미리보기" loading="lazy" decoding="async">
-          <div class="card-body">
-            <div class="card-topline">
-              <span class="type" data-i18n="collab.mapleType">Hackathon Team Portfolio</span>
-              <span class="status">Team</span>
-            </div>
-            <h3>메이플 해커톤 포트폴리오</h3>
-            <p data-i18n="collab.mapleDesc">Microsoft AI School 수료생들과 함께 2026 메커톤 지원을 위해 제작한 팀 포트폴리오 웹사이트입니다. 팀원의 기술 경험과 프로젝트 이력을 캐릭터 선택형 인터페이스로 구성했습니다.</p>
-            <div class="tags">
-              <span>HTML</span>
-              <span>CSS</span>
-              <span>JavaScript</span>
-              <span>Team Project</span>
-            </div>
-            <details class="project-detail">
-              <summary data-i18n="common.details">상세 내용</summary>
-              <div class="detail-content">
-                <div class="detail-block">
-                  <strong data-i18n="collab.mapleScopeH">담당 범위</strong>
-                  <p data-i18n="collab.mapleScope">메커톤 지원용 팀 포트폴리오에서 팀원별 캐릭터 콘셉트와 비주얼 방향을 정리하고, 캐릭터 디자인 산출물 제작에 참여했습니다. Microsoft AI School 수료생들의 프로젝트 이력과 개성을 캐릭터 선택형 화면에 자연스럽게 담는 방향으로 기여했습니다.</p>
-                </div>
-                <p class="detail-evidence" data-i18n="collab.mapleEvidence">산출물: 팀원 캐릭터 이미지와 메이플스토리 감성의 포트폴리오 비주얼 콘셉트.</p>
-              </div>
-            </details>
-            <div class="card-actions">
-              <a class="button small primary" href="https://github.com/yeyounglim-01/ohapzone-maple-portfolio" target="_blank" rel="noreferrer">
-                <i data-lucide="github"></i>
-                GitHub
-              </a>
-              <a class="button small secondary" href="https://yeyounglim-01.github.io/ohapzone-maple-portfolio/" target="_blank" rel="noreferrer">
                 <i data-lucide="external-link"></i>
                 <span data-i18n="collab.openSite">사이트 열기</span>
               </a>
@@ -597,6 +506,60 @@
               </a>
             </div>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section credentials" aria-labelledby="training-title">
+      <div class="section-heading">
+        <p class="section-kicker" data-i18n="train.kicker">Training</p>
+        <h2 id="training-title" data-i18n="train.title">교육 이수</h2>
+      </div>
+      <div class="credential-grid">
+        <article class="credential-item">
+          <span class="credential-name">AWS Cloud Solutions Architect</span>
+          <span class="credential-meta">Amazon Web Services · 62h · EC2·S3·VPC·IAM, 3-tier/서버리스 설계</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">AWS Generative AI Applications</span>
+          <span class="credential-meta">Amazon Web Services · 18h · Bedrock, 프롬프트 엔지니어링, Guardrails</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">Mathematics for Machine Learning</span>
+          <span class="credential-meta">Imperial College London · 58h · 선형대수, 다변수 미적분, PCA</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">Microsoft AI School</span>
+          <span class="credential-meta">Microsoft · 956h · Azure AI, RAG, OCR, 객체탐지, 클라우드 배포</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">AI 반도체 활용·응용 교육 (AI Chip Camp)</span>
+          <span class="credential-meta">KAIT · 12h · LLM 연산구조, LPU 아키텍처, 추론 성능 관점</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section credentials" aria-labelledby="credentials-title">
+      <div class="section-heading">
+        <p class="section-kicker" data-i18n="cred.kicker">Credentials</p>
+        <h2 id="credentials-title">Certifications</h2>
+      </div>
+      <div class="credential-grid">
+        <article class="credential-item">
+          <span class="credential-name">Microsoft Certified: Azure AI Fundamentals</span>
+          <span class="credential-meta">Microsoft · 2026.01.23</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">Google Analytics Certification</span>
+          <span class="credential-meta">Google · 2026.04.11</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">ADsP (데이터분석 준전문가)</span>
+          <span class="credential-meta">한국데이터산업진흥원 · 2026.06 · ADsP-049016802</span>
+        </article>
+        <article class="credential-item">
+          <span class="credential-name">6Sigma Green Belt</span>
+          <span class="credential-meta">한국자격검정평가진흥원 · 2026.03.24 · 등록번호 2023-005394</span>
         </article>
       </div>
     </section>
