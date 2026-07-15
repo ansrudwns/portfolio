@@ -72,9 +72,9 @@
     "nav.collaboration": "Collaboration",
     "nav.contact": "Contact",
 
-    "hero.eyebrow": "AI Engineering · AX Planning · Cloud",
+    "hero.eyebrow": "Problem Framing · AI Engineering · Validation",
     "hero.subtitle": "Portfolio",
-    "hero.text": "From planning to implementation to cloud operations — I design AI services end-to-end. Starting from resource and geotechnical field data, I built RAG, anomaly-detection and computer-vision services and operated them on Azure and AWS.",
+    "hero.text": "I structure the problem, implement the AI it needs and validate the result. Through geotechnical hazard detection, contract RAG, voice agents and an AI R&D pipeline, I have connected data, models and human judgment.",
     "hero.viewProjects": "View Projects",
 
     "panel.portfolio": "Portfolio",
@@ -83,22 +83,17 @@
     "panel.ssafyDesc": "Samsung SW Academy for Youth · Cohort 16",
     "panel.aiChipDesc": "AI Semiconductor Training · GPU/NPU",
 
-    "about.kicker": "About",
-    "about.title": "Plan, build, run — one continuous flow",
-    "about.subtitle": "One person connecting AX planning, AI implementation and cloud operations.",
-    "about.body": "Starting from the geotechnical and tunnel field data I handled in energy & resources engineering, I am an engineer who plans, builds and operates cloud AI services. I connect problem definition and architecture design (AX planning), RAG / anomaly-detection / computer-vision model implementation (AI), and Azure/AWS-based deployment and operation (Cloud) into one flow. Working with field data taught me that data quality and labeling criteria drive model performance, so I focus on designing not just the model but the data, experiment conditions and service structure together.",
-
     "cred.kicker": "Credentials",
     "train.kicker": "Training",
     "train.title": "Training & Courses",
     "skills.kicker": "Core Skills",
     "skills.title": "Core competencies — plan · build · run",
     "skills.aiTitle": "AX Planning",
-    "skills.aiDesc": "Problem definition · service planning · architecture design. Led the RAG contract-analysis project (CheckMate) as PM, owning the flow and role split.",
+    "skills.aiDesc": "I structure user problems into input, decision, validation and operation stages. On CheckMate, I served as PM and backend contributor, defining the analysis flow and role boundaries.",
     "skills.beTitle": "AI Implementation",
-    "skills.beDesc": "RAG, anomaly detection, computer vision (YOLO), agentic & generative AI. End-to-end implementation on FastAPI.",
+    "skills.beDesc": "I implement AI structures that fit the problem: YOLO plus motion, IF/LOF/OCSVM comparisons, Azure RAG, and voice tool and memory modules.",
     "skills.cloudTitle": "Cloud / Operations",
-    "skills.cloudDesc": "Operating Azure OpenAI · AI Search · Container Apps. Design on AWS (Bedrock · Solutions Architect).",
+    "skills.cloudDesc": "Implemented Azure OpenAI, AI Search and Document Intelligence integrations plus GitHub Actions workflows. Expanding AWS architecture and Bedrock experience through formal training.",
 
     "exp.kicker": "Experience",
     "exp.title": "Research experience",
@@ -109,53 +104,65 @@
     "exp.rockType": "Computer Vision",
     "exp.rockTitle": "CCTV-based Rockfall Detection",
     "exp.rockSummary": "Built a research prototype that filters rockfall candidates by combining YOLOv8 object detection with frame-difference motion detection.",
+    "exp.rockP1": "Role: training experiments, inference pipeline, MotionDetector fusion and tuning GUI",
+    "exp.rockP2": "Choice: filtered YOLO-only false positives using actual motion as a second signal",
+    "exp.rockP3": "Validation: measured precision and recall changes across training conditions and thresholds",
     "exp.rockCap": "Rockfall candidate detection combining YOLOv8 with motion detection",
+    "exp.rockRoleH": "My role",
+    "exp.rockRole": "I implemented the full research prototype: field-video dataset preparation, YOLOv8 training experiments, video inference, OpenCV motion fusion and a GUI for inspecting results.",
     "exp.rockProblemH": "Problem",
-    "exp.rockProblem": "Rockfall detection is a video problem where small objects move fast and false positives arise easily from lighting changes or background shake. To reduce this, I did not use raw YOLOv8 detections directly, but also extracted regions of actual movement via frame differencing.",
-    "exp.rockImplH": "Implementation",
+    "exp.rockProblem": "Small, fast rockfalls, lighting shifts and background shake created false positives. I kept candidates only where YOLOv8 boxes overlapped frame-difference motion regions.",
+    "exp.rockImplH": "Approach",
     "exp.rockImpl": "Processing frames sequentially, YOLOv8 produced rock candidate boxes while an OpenCV-based MotionDetector computed motion boxes. Only boxes meeting an IoU/IoM threshold were kept as final candidates, and a GUI allowed adjusting confidence, IoU threshold, tile size, step and display mode (box/dot/none).",
+    "exp.rockDecisionH": "Technology choice",
+    "exp.rockDecision": "I used YOLOv8 for repeated training and inference experiments. Frame differencing filtered static false positives with no complex tracker. Large camera shake remained a weakness.",
     "exp.rockExpH": "Experiments",
-    "exp.rockExp": "I ran YOLOv8 training experiments across image size, batch size and learning-rate combinations, and examined the trade-off between recall-focused settings that avoid missing small rockfalls and precision-focused settings that reduce false positives.",
+    "exp.rockExp": "I trained YOLOv8 across image-size, batch-size and learning-rate combinations. Recall-focused settings reduced missed small rockfalls. Precision-focused settings reduced false positives.",
     "exp.rockEvidence": "Implementation: YOLOv8·MotionDetector code, IoU/IoM fusion, GUI-based video processing flow.",
 
     "exp.mwdType": "Anomaly Detection",
     "exp.mwdTitle": "Tunnel MWD Anomaly Detection",
     "exp.mwdSummary": "Linked MWD signals and RMR changes from tunnel sites to estimate ground hazard zones, and compared unsupervised anomaly detection models.",
+    "exp.mwdP1": "Role: site-data alignment and preprocessing, three-model experiments, GUI and evaluation pipeline",
+    "exp.mwdP2": "Choice: compared unsupervised anomaly detectors because reliable ground-truth labels were scarce",
+    "exp.mwdP3": "Validation: used declining RMR as a proxy label and evaluated in 0.5 m depth bins",
     "exp.mwdCap": "Hazard-zone detection visualizing MWD signals together with RMR change",
+    "exp.mwdRoleH": "My role",
+    "exp.mwdRole": "I implemented the analysis flow from depth-based alignment and feature construction through IF/LOF/OCSVM experiments, anomaly-segment post-processing, a GUI, metric calculation and result visualization.",
     "exp.mwdProblemH": "Problem",
     "exp.mwdProblem": "This started from the idea that MWD signals such as boring speed, rotation pressure and feed pressure indirectly reflect ground-condition changes during tunnel excavation. I aligned raw site data by depth and defined zones of declining RMR as proxy labels for hazard zones.",
-    "exp.mwdModelH": "Model comparison",
-    "exp.mwdModel": "I compared Isolation Forest, Local Outlier Factor and One-Class SVM, varying feature combinations and parameters such as contamination, n_neighbors, gamma and nu. To turn results into interpretable hazard zones, I merged nearby anomalies and filtered out segments that were too short.",
-    "exp.mwdEvalH": "Evaluation",
-    "exp.mwdEval": "I compared predicted hazard zones against RMR-decline zones in 0.5 m depth bins, computing Precision, Recall, F1 and Accuracy. The experiments showed how feature combinations and model choices changed detection results within each site's data.",
+    "exp.mwdModelH": "Why these models",
+    "exp.mwdModel": "Sparse expert labels led to an unsupervised approach. Isolation Forest detects global isolation, LOF detects local-density shifts and One-Class SVM learns the normal boundary. The three assumptions were tested on the same data.",
+    "exp.mwdEvalH": "Evaluation and limitation",
+    "exp.mwdEval": "I compared predicted hazard zones with RMR-decline zones in 0.5 m depth bins and computed Precision, Recall, F1 and Accuracy. RMR decline is a proxy label. Evaluation is limited to relative feature and model comparisons.",
     "exp.mwdEvidence": "Implementation: IF/LOF/OCSVM experiment GUI, depth-bin evaluation, result CSVs and visualization graphs.",
 
     "proj.kicker": "Personal Project",
     "proj.title": "Personal projects",
     "proj.n2sType": "AI R&D Pipeline",
-    "proj.n2sDesc": "A personal R&D knowledge pipeline that collects AI tech trends and turns them into actionable Skills and design records.",
-    "proj.n2sP1": "Designed a manually triggered AI-news collection flow on GitHub Actions with local LLM agent processing",
-    "proj.n2sP2": "Added a human-in-the-loop approval step to control absorption into the knowledge base",
-    "proj.n2sP3": "Controlled how generated assets are applied through static audit, provenance verification and downgrade prevention",
-    "proj.n2sScopeH": "Scope",
-    "proj.n2sScope": "Designed a pipeline where GitHub Actions is run on demand to collect AI-news candidates, then a local LLM workflow handles analysis, draft generation, human approval and knowledge-asset promotion.",
+    "proj.n2sDesc": "A personal R&D pipeline that turns AI trends into reviewable drafts and reusable Skills and design records.",
+    "proj.n2sP1": "Role: designed and implemented the full collection, analysis, audit, approval and promotion pipeline",
+    "proj.n2sP2": "Choice: separated GitHub Actions candidate collection from local LLM analysis",
+    "proj.n2sP3": "Operation: blocks automatic promotion and requires static audit, provenance checks and human approval",
+    "proj.n2sScopeH": "My role",
+    "proj.n2sScope": "As a personal project, I designed and implemented the data collectors, GitHub Actions, local LLM workflows, audit and approval gates, and the Skills and Diaries storage structure end to end.",
     "proj.n2sTrustH": "Trust mechanisms",
-    "proj.n2sTrust": "Static audit, provenance verification and downgrade-prevention checks ensure LLM-generated assets pass human approval and verification before being applied.",
-    "proj.n2sDecisionH": "Retrospective technical judgment",
-    "proj.n2sDecision": "At this personal-project scale, GitHub Actions avoided the infrastructure and cost of a cron server or Airflow while keeping execution history in the repository. Scheduled runs are now disabled; I run it manually when needed, prioritizing reviewability over automatic collection.",
+    "proj.n2sTrust": "LLM-generated assets stay in staging. Only results that pass static audit, provenance checks, downgrade prevention and human approval are promoted into knowledge assets.",
+    "proj.n2sDecisionH": "Technology choice",
+    "proj.n2sDecision": "GitHub Actions keeps collection history with no separate server. A local LLM analyzes the collected material, and I promote only reviewed results into the knowledge base. Runs are now manual.",
     "proj.n2sEvidence": "Implementation: <code>.github/workflows</code>, <code>scripts/sign_drafts.py</code>, <code>scripts/audit_index.py</code>, <code>.agents/workflows</code>.",
 
     "proj.kraftonType": "AI R&D Hackathon",
-    "proj.kraftonDesc": "A personal archive organizing my KRAFTON AI R&D Hackathon finals experience into per-problem solutions and retrospectives.",
-    "proj.kraftonP1": "Solutions for prelim MultiplierBoard, SparseTap and finals Written Exam, BattlePredict, VideoAgent",
-    "proj.kraftonP2": "Separated contest submissions from post-contest code that I implemented and reran to document changes and limits",
-    "proj.kraftonP3": "Clearly marked the organizer-review-based version as a follow-up plan rather than a completed implementation",
-    "proj.kraftonOrgH": "How it is organized",
-    "proj.kraftonOrg": "The archive separates contest submissions, post-contest improvements implemented and run before the organizer review, and follow-up plans based on that review.",
-    "proj.kraftonRepH": "Representative problems",
-    "proj.kraftonRep": "After the contest I rebuilt VideoAgent on Vertex AI and added retries, incremental result saving and file cleanup. The improved variants recorded repeated run times of about 190–666 seconds; hard timeouts, failed-task cancellation and a ground-truth evaluation set remain follow-up work.",
-    "proj.kraftonDecisionH": "Retrospective technical judgment",
-    "proj.kraftonDecision": "A single call over a long video is simple, but carries context, time-limit and total-failure risk. Chunked parallel map-reduce adds merge cost and possible information loss, but supports retries and partial-result preservation under a time limit. I documented this comparison after the contest.",
+    "proj.kraftonDesc": "My KRAFTON AI R&D Hackathon archive: what I tried, what failed and what I changed on the way to the finals.",
+    "proj.kraftonP1": "Role: competed individually across mathematical, modeling and multimodal problems in prelims and finals",
+    "proj.kraftonP2": "Choice: used Transformers, GF(2), probabilistic models and a Gemini video pipeline by problem type",
+    "proj.kraftonP3": "Result: reached the finals and separated contest submissions, rerun code and next improvements",
+    "proj.kraftonOrgH": "My role and constraints",
+    "proj.kraftonOrg": "I competed alone and had to understand each problem, build the solution and submit code under a time limit. The public repository keeps contest code, code I reran immediately afterward and the next changes in separate folders.",
+    "proj.kraftonRepH": "Technology and representative problem",
+    "proj.kraftonRep": "Right after the contest, I rebuilt VideoAgent on Vertex AI and added retries, incremental result saving and file cleanup. Repeated runs took about 190–666 seconds. Hard timeouts, failed-task cancellation and a ground-truth evaluation set are still incomplete.",
+    "proj.kraftonDecisionH": "Technology choice",
+    "proj.kraftonDecision": "Sending a long video in one call caused timeout and total-failure risk. I split videos and processed chunks in parallel so failed chunks could run again. I also saved intermediate results because merging can lose information.",
     "proj.kraftonEvidence": "Implementation: per-problem READMEs, VideoAgent FFmpeg processing code, BattlePredict <code>correct_solve.py</code>, and a SparseTap GF(2) solution.",
 
     "collab.kicker": "Team Experience",
@@ -163,40 +170,50 @@
 
     "collab.busanType": "Hackathon · Service",
     "collab.busanStatus": "Award",
-    "collab.busanDesc": "A Busan fishing-info service planned and built with a team at the Busan Ralphton hackathon hosted by the Codex community. After winning the Host Voting Award, we developed it beyond a one-off demo into an operating web service.",
-    "collab.busanP1": "Owned mobile UI/UX restructuring and frontend implementation",
-    "collab.busanP2": "Won the hackathon's Host Voting Award",
-    "collab.busanP3": "Continued development after the event and now operate it as a live web service",
+    "collab.busanDesc": "Winner of the Busan Ralphton Host Voting Award. After the event, we developed it into a live Busan fishing-information service.",
+    "collab.busanP1": "Role: mobile UI/UX restructuring, brand visuals and frontend implementation",
+    "collab.busanP2": "Choice: built a lightweight mobile web flow with React, zustand and Leaflet",
+    "collab.busanP3": "Result: won the Host Voting Award and continued into live web service operation",
     "collab.busanScopeH": "My role",
-    "collab.busanScope": "I restructured information hierarchy and the preparation, log, eobo, collection and sharing flows across the <code>/app</code> mobile screens, and handled brand visuals and frontend implementation. LLM calls, payments, the DB schema and server APIs remained teammates' areas, keeping contribution boundaries explicit.",
+    "collab.busanScope": "I redesigned the information hierarchy and the preparation, log, eobo, collection and sharing flows across the <code>/app</code> mobile screens. I also owned the brand visuals and frontend implementation. Teammates handled LLM calls, payments, the DB schema and server APIs.",
     "collab.busanApproachH": "Problem and approach",
     "collab.busanApproach": "For information-dense mobile screens, I prioritized essential content and moved details into collapsible or popup structures. I also removed unused assets and converted representative images to WebP to reduce initial load weight.",
     "collab.busanResultH": "Verified result",
     "collab.busanResult": "Reduced <code>public/assets</code> from 13.3 MB to 5.78 MB and a representative sample image from 909.7 KB to 30.2 KB. The team won the Host Voting Award and continued development into the currently operating live service.",
-    "collab.busanDecisionH": "Retrospective technical judgment",
-    "collab.busanDecision": "In hindsight, the Vite, React, zustand and Leaflet stack fit a mobile web app that did not require SSR, large Redux-style state or commercial map billing. This is a post-implementation suitability assessment, not a claim that I personally benchmarked every alternative at the time.",
-    "collab.busanEvidence": "Evidence: live service, Host Voting Award and asset-optimization commit history. The personal fork is private, so it is not used as a public evidence link.",
+    "collab.busanDecisionH": "Technology choice",
+    "collab.busanDecision": "I built the mobile screens with Vite and React and managed state with zustand. Leaflet displayed fishing points with no commercial map fee.",
+    "collab.busanEvidence": "The live service, Host Voting Award and asset-optimization commits show the result of my work.",
     "collab.openSite": "Open site",
 
     "collab.checkmateType": "RAG Contract Analysis",
     "collab.checkmateDesc": "A system that reviews unfair contract clauses with RAG on Azure OpenAI and AI Search. The flow uses a Rule Engine for clear violations and sends only ambiguous clauses to the LLM, constraining calls and evidence handling.",
+    "collab.checkmateP1": "Role: PM and backend contributor; implemented OCR-coordinate PII masking and legal RAG",
+    "collab.checkmateP2": "Choice: separated deterministic Rule Engine checks from clauses requiring LLM interpretation",
+    "collab.checkmateP3": "Result: built a lease and labor contract analysis prototype with reports in eight languages",
     "collab.checkmateScopeH": "My role",
-    "collab.checkmateScope": "Using Azure Language PII I extracted the locations of personal data in contracts and visualized them as masked images mapped to OCR coordinates. I also loaded lease and labor-contract legal data into Azure AI Search so RAG retrieval could supply the evidence needed to explain contract risk.",
+    "collab.checkmateScope": "I served as PM and backend contributor, defining the document-analysis flow and team roles. I mapped Azure Language PII results to OCR coordinates to mask personal data. I also built the Azure AI Search ingestion and retrieval flow for lease and labor-contract legal data.",
     "collab.checkmateArchH": "Architecture",
     "collab.checkmateArch": "Uploaded contract documents from the frontend are received by a FastAPI backend and passed to Azure Document Intelligence for text and coordinate extraction. Then PII masking, Rule-Engine first-pass validation, Azure AI Search RAG and Azure OpenAI report generation produce user-understandable analysis and multilingual summaries.",
-    "collab.checkmateDecisionH": "Technical choice and retrospective comparison",
-    "collab.checkmateDecision": "Azure Document Intelligence returns coordinates as well as text, allowing detected PII to be mapped back onto the source image. Compared with an LLM-only decision flow, a rules-first design is more reproducible and can avoid unnecessary calls, but adds rule-maintenance cost. I did not measure the actual cost-reduction rate, so I do not present it as a result metric.",
+    "collab.checkmateDecisionH": "Technology choice",
+    "collab.checkmateDecision": "Masking personal data at its original position required both text and coordinates, so I chose Azure Document Intelligence. The Rule Engine handled clear violations, and the LLM handled clauses that needed interpretation. I did not obtain a measured cost-reduction figure.",
+    "collab.checkmateResultH": "Result and limitation",
+    "collab.checkmateResult": "I connected lease and labor rule checks, RAG evidence retrieval, PII masking and reports in eight languages into one prototype. Turning it into a real service would require a larger dataset validated by legal experts.",
     "collab.checkmateEvidence": "Implementation: <code>backend/app/api/endpoints/analysis.py</code>, <code>rule_engine.py</code>, <code>labor_rules.py</code>, <code>rag.py</code>, and README.",
 
     "collab.airaType": "AI Voice Companion",
-    "collab.airaDesc": "A real-time voice companion extended from the STT, tool-calling and RAG-memory modules separated out in 3rd Project Modules. It includes FastAPI WebSocket, Gemini Native Audio, conversation memory and a Next.js frontend flow.",
+    "collab.airaDesc": "A project where I built voice input, tool-calling and vector-memory PoCs separately and integrated them into the team's real-time voice companion backend.",
+    "collab.airaP1": "Role: implemented Azure STT, Gemini tool calling, vision and Azure AI Search memory modules",
+    "collab.airaP2": "Choice: validated feature PoCs independently before integrating them into the team backend",
+    "collab.airaP3": "Structure: real-time flow using FastAPI WebSocket, Gemini Native Audio and an Intent Router",
     "collab.airaScopeH": "My role",
-    "collab.airaScope": "I first implemented my assigned voice-input processing, intent routing, tool calling and long-term memory as modules in the 3rd_Project_Modules repo. I then integrated that structure into the Aira backend to classify user utterances in real time and inject external context such as transit, news, weather and schedule into responses.",
+    "collab.airaScope": "In <code>3rd_Project_Modules</code>, I built Azure Speech STT, Gemini tool calling, vision, urgent-message handling and an Azure AI Search memory PoC. I then connected these modules to the team's Intent Router and real-time API flow.",
     "collab.airaArchH": "Architecture",
     "collab.airaArch": "A FastAPI WebSocket acts as the central gateway for voice conversations and Gemini Native Audio generates real-time responses. An Intent Router and Orchestrator branch on utterance intent, combining Seoul real-time info, TMAP/ODSay transit, news, weather and memory context to raise response quality.",
-    "collab.airaDecisionH": "Technical choice and retrospective comparison",
-    "collab.airaDecision": "Compared with sending every request through one agent, separating an Intent Router and feature modules makes latency, cost and failure points easier to predict and supports staged team integration. The trade-off is maintaining routing rules and interfaces whenever a new intent or tool is added.",
-    "collab.airaEvidence": "Evidence: the personal modules repository and a post-project fork of the team backend, including <code>backend/server.py</code>, <code>modules/intent_router.py</code> and <code>modules/ws_orchestrator_service.py</code>.",
+    "collab.airaDecisionH": "Technology choice",
+    "collab.airaDecision": "I built STT, tools and memory as independent modules first. This let me verify each input, output and failure path before launching the full service. During integration, the Intent Router reduced the chance that one module failure would break the full conversation.",
+    "collab.airaLimitH": "Evidence boundary",
+    "collab.airaLimit": "My personal repository contains the module PoCs I owned. I kept later security and reliability improvements in a separate backend fork.",
+    "collab.airaEvidence": "<code>3rd_Project_Modules</code> contains the STT, tool and memory code. The backend fork shows the integrated structure and later improvements.",
     "collab.airaFork": "Backend Fork",
     "collab.aira3rd": "3rd Modules",
 
@@ -205,7 +222,8 @@
 
     "footer.built": "Built with HTML, CSS, JavaScript",
 
-    "common.details": "Details"
+    "common.details": "View details",
+    "common.close": "Close"
   };
 
   const langBtn = () => document.querySelector("[data-lang-toggle]");
@@ -328,6 +346,58 @@
     items.forEach((el) => obs.observe(el));
   }
 
+  /* ---------- Project detail modal ---------- */
+  function initProjectModal() {
+    const dialog = document.querySelector("[data-project-modal]");
+    const modalTitle = dialog?.querySelector("[data-project-modal-title]");
+    const modalBody = dialog?.querySelector("[data-project-modal-body]");
+    const closeButton = dialog?.querySelector("[data-project-modal-close]");
+    if (!dialog || !modalTitle || !modalBody || !closeButton || typeof dialog.showModal !== "function") return;
+
+    let lastTrigger = null;
+    root.classList.add("modal-ready");
+
+    const openCard = (card) => {
+      const detail = card.querySelector("details.project-detail");
+      const content = detail?.querySelector(":scope > .detail-content");
+      const heading = card.querySelector("h3, h4");
+      if (!detail || !content || !heading) return;
+
+      detail.open = false;
+      modalTitle.textContent = heading.textContent.trim();
+      modalBody.replaceChildren(content.cloneNode(true));
+      lastTrigger = detail.querySelector("summary");
+      dialog.showModal();
+      document.body.classList.add("modal-open");
+      closeButton.focus();
+    };
+
+    document.querySelectorAll(".project-card, .research-topic-card").forEach((card) => {
+      if (!card.querySelector("details.project-detail")) return;
+      card.classList.add("opens-modal");
+
+      card.addEventListener("click", (event) => {
+        if (event.defaultPrevented || (event.button != null && event.button !== 0)) return;
+        if (event.target.closest("a, button")) return;
+        if (window.getSelection && window.getSelection().toString()) return;
+
+        event.preventDefault();
+        openCard(card);
+      });
+    });
+
+    closeButton.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener("close", () => {
+      document.body.classList.remove("modal-open");
+      modalBody.replaceChildren();
+      lastTrigger?.focus({ preventScroll: true });
+      lastTrigger = null;
+    });
+  }
+
   /* ---------- Boot ---------- */
   window.addEventListener("DOMContentLoaded", () => {
     renderIcons();
@@ -336,6 +406,7 @@
     initMobileNav();
     initScrollSpy();
     initReveal();
+    initProjectModal();
 
     const tb = themeBtn();
     if (tb) tb.addEventListener("click", toggleTheme);
