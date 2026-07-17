@@ -30,9 +30,9 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="style.css?v=25">
+  <link rel="stylesheet" href="style.css?v=29">
   <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" defer></script>
-  <script src="script.js?v=27" defer></script>
+  <script src="script.js?v=31" defer></script>
 
   <script type="application/ld+json">
   {
@@ -214,6 +214,47 @@
                         <p data-i18n="exp.rockImpl">영상 프레임을 순차 처리하면서 YOLOv8로 암석 후보 박스를 만들고, OpenCV 기반 MotionDetector로 움직임 박스를 계산했습니다. 두 박스가 IoU/IoM 기준을 만족하는 경우만 최종 낙석 후보로 남기고, GUI에서 confidence, iou threshold, 타일 크기, step, 표시 방식(box/dot/none)을 조정할 수 있도록 구성했습니다.</p>
                       </div>
                       <div class="detail-block">
+                        <strong data-i18n="exp.rockFlowH">처리 파이프라인</strong>
+                        <div class="architecture-map" aria-label="낙석 탐지 처리 파이프라인">
+                          <div class="architecture-map-head">
+                            <span>EXECUTION PATH</span>
+                            <code>video_gui.py → process_video()</code>
+                          </div>
+                          <div class="architecture-track architecture-track--rock">
+                            <section class="architecture-node">
+                              <small>01 · CONTROL</small>
+                              <h5 data-i18n="flow.rock.control">GUI 설정과 영상 입력</h5>
+                              <ul><li>model · confidence</li><li>tile size · step</li><li>box · dot · none</li></ul>
+                            </section>
+                            <section class="architecture-node">
+                              <small>02 · PREPROCESS</small>
+                              <h5 data-i18n="flow.rock.preprocess">프레임 전처리</h5>
+                              <ul><li data-i18n="flow.rock.sr">선택적 EDSR ×2</li><li data-i18n="flow.rock.tile">전체 프레임 또는 타일 순회</li></ul>
+                            </section>
+                            <section class="architecture-node architecture-node--cluster">
+                              <small>03 · DUAL SIGNAL</small>
+                              <h5 data-i18n="flow.rock.dual">두 신호를 독립 계산</h5>
+                              <div class="architecture-lanes">
+                                <div><b>YOLOv8</b><span data-i18n="flow.rock.yolo">암석 클래스 후보 박스</span></div>
+                                <div><b>MotionDetector</b><span data-i18n="flow.rock.motion">회색조·블러·프레임 차·팽창·세로 윤곽</span></div>
+                              </div>
+                            </section>
+                            <section class="architecture-node architecture-node--gate">
+                              <small>04 · OVERLAP GATE</small>
+                              <h5 data-i18n="flow.rock.gate">교차 후보만 통과</h5>
+                              <ul><li>IoU &gt; 0.4</li><li>intersection / motion &gt; 0.5</li></ul>
+                            </section>
+                            <section class="architecture-node architecture-node--output">
+                              <small>05 · OUTPUT</small>
+                              <h5 data-i18n="flow.rock.render">표시·경고·영상 저장</h5>
+                              <ul><li data-i18n="flow.rock.display">박스·중심점·표시 없음</li><li data-i18n="flow.rock.video">타임스탬프 MP4</li></ul>
+                            </section>
+                          </div>
+                          <p class="architecture-source"><span>SOURCE</span><code>src/video_gui.py</code><code>src/motion_detector.py</code><code>src/yolov8_motion_detection.py</code></p>
+                        </div>
+                        <p data-i18n="exp.rockFlow">GUI에서 받은 조건으로 프레임을 순회합니다. YOLO 후보와 프레임 차분 기반 움직임 후보가 겹칠 때만 낙석으로 남기고, 선택한 표시 방식으로 결과 영상을 저장합니다.</p>
+                      </div>
+                      <div class="detail-block">
                         <strong data-i18n="exp.rockDecisionH">기술 선택</strong>
                         <p data-i18n="exp.rockDecision">YOLOv8로 학습과 추론 실험을 반복했습니다. 프레임 차분을 결합해 복잡한 추적 모델 없이 정적 오탐을 걸러냈습니다. 카메라 흔들림에는 취약했습니다.</p>
                         <div class="decision-comparison">
@@ -266,6 +307,48 @@
                       <div class="detail-block">
                         <strong data-i18n="exp.mwdProblemH">문제 정의</strong>
                         <p data-i18n="exp.mwdProblem">터널 굴진 중 장비에서 수집되는 boring speed, rotation pressure, feed pressure 등의 MWD 신호가 지반 상태 변화를 간접적으로 반영한다는 점에서 출발했습니다. 원본 현장 데이터를 깊이 기준으로 정렬하고, RMR 값이 저하되는 구간을 위험 구간을 가늠하는 대체 기준으로 삼았습니다.</p>
+                      </div>
+                      <div class="detail-block">
+                        <strong data-i18n="exp.mwdFlowH">분석 파이프라인</strong>
+                        <div class="architecture-map" aria-label="MWD 이상 탐지 분석 파이프라인">
+                          <div class="architecture-map-head">
+                            <span>EXPERIMENT HARNESS</span>
+                            <code>experiment_gui.py → run_experiment()</code>
+                          </div>
+                          <div class="architecture-track architecture-track--mwd">
+                            <section class="architecture-node">
+                              <small>01 · LOAD</small>
+                              <h5 data-i18n="flow.mwd.load">두 Excel을 깊이 축으로 정리</h5>
+                              <ul><li>boring · rotation · feed</li><li>depth · RMR</li><li>numeric coercion · dropna</li></ul>
+                            </section>
+                            <section class="architecture-node">
+                              <small>02 · GRID</small>
+                              <h5 data-i18n="flow.mwd.grid">특징·모델 조건 조합</h5>
+                              <ul><li data-i18n="flow.mwd.features">7개 특징 조합</li><li>StandardScaler</li><li>Pool(processes=2)</li></ul>
+                            </section>
+                            <section class="architecture-node architecture-node--cluster">
+                              <small>03 · MODEL RUNNERS</small>
+                              <h5 data-i18n="flow.mwd.models">같은 평가 틀의 세 실험기</h5>
+                              <div class="architecture-lanes">
+                                <div><b>Isolation Forest</b><span>contamination</span></div>
+                                <div><b>LOF</b><span>contamination · n_neighbors</span></div>
+                                <div><b>One-Class SVM</b><span>RBF · nu · gamma</span></div>
+                              </div>
+                            </section>
+                            <section class="architecture-node architecture-node--gate">
+                              <small>04 · SEGMENT</small>
+                              <h5 data-i18n="flow.mwd.post">이상값을 깊이 구간으로 변환</h5>
+                              <ul><li data-i18n="flow.mwd.merge">인접 구간 병합</li><li data-i18n="flow.mwd.filter">최소 길이 필터</li><li data-i18n="flow.mwd.rmr">RMR 감소 구간 확장</li></ul>
+                            </section>
+                            <section class="architecture-node architecture-node--output">
+                              <small>05 · SCORE</small>
+                              <h5 data-i18n="flow.mwd.score">0.5m bin 비교</h5>
+                              <ul><li>Precision · Recall · F1</li><li>Accuracy</li><li>OMC = FP + 10 × FN</li></ul>
+                            </section>
+                          </div>
+                          <p class="architecture-source"><span>SOURCE</span><code>src/isolation_forest/experiment_gui.py</code><code>src/lof/experiment_gui.py</code><code>src/one_class_svm/experiment_gui.py</code></p>
+                        </div>
+                        <p data-i18n="exp.mwdFlow">세 실험기는 같은 입력·구간화·평가 구조를 공유합니다. 특징 조합과 모델별 하이퍼파라미터를 병렬 실행하고, 예측 구간을 RMR 감소 구간과 0.5m 단위로 비교합니다.</p>
                       </div>
                       <div class="detail-block">
                         <strong data-i18n="exp.mwdModelH">기술 선택 이유</strong>
@@ -335,7 +418,7 @@
       </div>
       <div class="project-grid">
         <article class="project-card">
-          <img src="assets/projects/news2skill.webp" alt="News2Skill AI R&D 파이프라인 콘셉트 이미지" loading="lazy" decoding="async">
+          <img src="assets/projects/news2skill-v2.webp" alt="News2Skill AI R&D 파이프라인 콘셉트 이미지" loading="lazy" decoding="async">
           <div class="card-body">
             <div class="card-topline">
               <span class="type" data-i18n="proj.n2sType">AI R&D Pipeline</span>
@@ -366,6 +449,35 @@
                   <p data-i18n="proj.n2sTrust">LLM 생성물은 staging에 보관합니다. 정적 감사, provenance 검증, 다운그레이드 방지 검사, 사람의 승인을 통과한 결과만 지식 자산으로 승격합니다.</p>
                 </div>
                 <div class="detail-block">
+                  <strong data-i18n="proj.n2sFlowH">지식 전환 파이프라인</strong>
+                  <div class="architecture-map architecture-map--lanes" aria-label="News2Skill 지식 전환 파이프라인">
+                    <div class="architecture-map-head">
+                      <span>APPROVAL-GATED R&amp;D</span>
+                      <code>cloud collection → local judgment</code>
+                    </div>
+                    <div class="architecture-lane-row">
+                      <b>CLOUD</b>
+                      <div class="architecture-lane-track architecture-lane-track--3">
+                        <section class="architecture-node"><small>01 · SOURCES</small><h5 data-i18n="flow.n2s.sources">RSS·ArXiv·기업 블로그·커뮤니티</h5></section>
+                        <section class="architecture-node"><small>02 · COLLECT</small><h5>GitHub Actions</h5><ul><li>fetch_ai_trends.py</li><li data-i18n="flow.n2s.dedupe">연도별 URL 중복 제거</li></ul></section>
+                        <section class="architecture-node architecture-node--handoff"><small>03 · QUEUE</small><h5>pending_queue.json</h5><ul><li data-i18n="flow.n2s.queue">수집과 분석의 경계</li></ul></section>
+                      </div>
+                    </div>
+                    <div class="architecture-lane-row architecture-lane-row--local">
+                      <b>LOCAL</b>
+                      <div class="architecture-lane-track architecture-lane-track--5">
+                        <section class="architecture-node"><small>04 · SIEVE</small><h5 data-i18n="flow.n2s.sieve">배치 분석·Frontier Sieve</h5><ul><li data-i18n="flow.n2s.brief">한국어 Daily Briefing</li></ul></section>
+                        <section class="architecture-node"><small>05 · DRAFT</small><h5 data-i18n="flow.n2s.route">Skill·Diary·Archive·Backlog 분류</h5><ul><li>.agents/staging</li></ul></section>
+                        <section class="architecture-node architecture-node--gate"><small>06 · VERIFY</small><h5 data-i18n="flow.n2s.verify">정적 감사와 출처 증명</h5><ul><li>P0/P1 reject</li><li data-i18n="flow.n2s.signature">SHA-256 · 서명 검증</li><li>.intoto.json</li></ul></section>
+                        <section class="architecture-node architecture-node--gate"><small>07 · APPROVE</small><h5 data-i18n="flow.n2s.human">사람이 승격을 승인</h5></section>
+                        <section class="architecture-node architecture-node--output"><small>08 · PROMOTE</small><h5 data-i18n="flow.n2s.assets">지식 자산 이동·인덱스 등록</h5><ul><li>Skills · Diaries · Archives</li><li>AGENTS.md</li></ul></section>
+                      </div>
+                    </div>
+                    <p class="architecture-source"><span>SOURCE</span><code>ai-daily-pipeline.yml</code><code>fetch_ai_trends.py</code><code>sign_drafts.py</code><code>auto_commit.py</code></p>
+                  </div>
+                  <p data-i18n="proj.n2sFlow">GitHub Actions는 외부 자료를 큐까지만 옮깁니다. 로컬 워크플로가 분석·초안 생성을 맡고, 정적 감사와 provenance 검증 뒤 사람이 승인해야 지식 자산과 AGENTS.md에 반영됩니다.</p>
+                </div>
+                <div class="detail-block">
                   <strong data-i18n="proj.n2sDecisionH">기술 선택</strong>
                   <p data-i18n="proj.n2sDecision">GitHub Actions로 별도 서버 없이 수집 이력을 남겼습니다. 수집된 자료는 로컬 LLM으로 분석하고, 제가 확인한 결과만 지식 자산으로 반영합니다. 지금은 필요할 때 수동으로 실행합니다.</p>
                   <div class="decision-comparison">
@@ -394,7 +506,7 @@
         </article>
 
         <article class="project-card">
-          <img src="assets/projects/krafton-ai-rnd.webp" alt="KRAFTON AI R&D Hackathon 문제 해결 콘셉트 이미지" loading="lazy" decoding="async">
+          <img src="assets/projects/krafton-ai-rnd-v2.webp" alt="KRAFTON AI R&D Hackathon 문제 해결 콘셉트 이미지" loading="lazy" decoding="async">
           <div class="card-body">
             <div class="card-topline">
               <span class="type" data-i18n="proj.kraftonType">AI R&D Hackathon</span>
@@ -426,14 +538,45 @@
                   <p data-i18n="proj.kraftonRep">대회 직후 VideoAgent를 Vertex AI 기반으로 다시 구성했습니다. 재시도, 중간 결과 저장, 파일 정리를 추가했습니다. 반복 실행 시간은 약 190~666초였습니다. 강제 타임아웃, 실패 태스크 취소, 정답 평가셋은 아직 완성하지 못했습니다.</p>
                 </div>
                 <div class="detail-block">
+                  <strong data-i18n="proj.kraftonFlowH">VideoAgent 파이프라인</strong>
+                  <div class="architecture-map architecture-map--lanes" aria-label="VideoAgent 영상 처리 파이프라인">
+                    <div class="architecture-map-head">
+                      <span>TWO-LEVEL ORCHESTRATION</span>
+                      <code>main.py → agent_pipeline.py</code>
+                    </div>
+                    <div class="architecture-lane-row">
+                      <b>20 JOBS</b>
+                      <div class="architecture-lane-track architecture-lane-track--3">
+                        <section class="architecture-node"><small>01 · DISCOVER</small><h5 data-i18n="flow.krafton.discover">videoN + promptN 쌍 탐색</h5></section>
+                        <section class="architecture-node architecture-node--cluster"><small>02 · SCHEDULE</small><h5 data-i18n="flow.krafton.schedule">영상 작업 최대 5개 동시 실행</h5><ul><li>asyncio.Semaphore(5)</li></ul></section>
+                        <section class="architecture-node architecture-node--handoff"><small>03 · WORKER</small><h5 data-i18n="flow.krafton.worker">영상별 파이프라인 진입</h5></section>
+                      </div>
+                    </div>
+                    <div class="architecture-lane-row architecture-lane-row--local">
+                      <b>1 VIDEO</b>
+                      <div class="architecture-lane-stack">
+                        <div class="architecture-lane-track architecture-lane-track--4">
+                          <section class="architecture-node"><small>04 · COMPRESS</small><h5>FFmpeg</h5><ul><li>720px · 2fps · CRF 28</li><li data-i18n="flow.krafton.chunk">5분 구간·절대 시간 유지</li></ul></section>
+                          <section class="architecture-node architecture-node--cluster"><small>05 · MAP</small><h5>Gemini Flash Lite</h5><ul><li>chunk semaphore = 3</li><li data-i18n="flow.krafton.events">질문 관련 사건만 타임라인화</li></ul></section>
+                          <section class="architecture-node"><small>06 · REDUCE</small><h5>Gemini Pro</h5><ul><li data-i18n="flow.krafton.reason">보기별 추론·소거</li><li data-i18n="flow.krafton.reflect">자기검토 후 XML 정답</li></ul></section>
+                          <section class="architecture-node architecture-node--output"><small>07 · COMMIT</small><h5>submission.txt</h5><ul><li>asyncio.Lock</li><li data-i18n="flow.krafton.incremental">20자리 결과를 매 작업마다 갱신</li></ul></section>
+                        </div>
+                        <div class="architecture-loop-note"><b>RECOVERY LOOPS ↺</b><span data-i18n="flow.krafton.recover">청크 호출은 최대 4회, 영상 작업은 속도 제한 시 최대 3회 재시도</span><code>2^attempt / 4^attempt backoff</code></div>
+                      </div>
+                    </div>
+                    <p class="architecture-source"><span>SOURCE</span><code>post-contest-before-review/main.py</code><code>agent_pipeline.py</code><code>video_processor.py</code></p>
+                  </div>
+                  <p data-i18n="proj.kraftonFlow">바깥에서는 20개 영상 문제를 최대 5개씩 처리합니다. 각 영상 안에서는 5분 청크를 최대 3개씩 분석하고, 시간순 로그를 Pro 모델이 추론·자기검토해 한 글자 정답으로 줄입니다. 결과는 작업이 끝날 때마다 잠금 후 저장합니다.</p>
+                </div>
+                <div class="detail-block">
                   <strong data-i18n="proj.kraftonDecisionH">기술 선택</strong>
-                  <p data-i18n="proj.kraftonDecision">긴 영상을 한 번에 맡기면 시간 초과나 전체 실패가 발생했습니다. 영상을 나누고 병렬로 처리해 실패한 구간만 다시 실행했습니다. 병합 과정에서 정보가 빠질 수 있어 중간 결과도 함께 저장했습니다.</p>
+                  <p data-i18n="proj.kraftonDecision">긴 영상을 한 번에 맡기면 시간 초과나 전체 실패 위험이 컸습니다. 5분 구간을 병렬 분석하고 청크 호출 안에서 재시도했습니다. 각 영상의 답은 즉시 저장해 다음 작업이 실패해도 이미 끝난 결과를 보존했습니다.</p>
                   <div class="decision-comparison">
                     <span class="decision-comparison-badge">DECISION LOG</span>
                     <div class="decision-comparison-summary">
                       <article><small data-i18n="decision.context">CONTEXT · 당시 조건</small><strong data-i18n="proj.kraftonLogContext">긴 영상을 한 번에 처리하면 제한 시간을 넘기거나 한 번의 오류로 전체 결과를 잃는 문제가 있었습니다.</strong></article>
-                      <article><small data-i18n="decision.chosen">CHOSEN · 선택한 기술</small><strong data-i18n="proj.kraftonLogChosen">영상을 구간으로 나눠 병렬 처리하고, 실패한 구간만 재시도하며 중간 결과를 파일로 저장했습니다.</strong></article>
-                      <article><small data-i18n="decision.rationale">RATIONALE · 선택 근거</small><strong data-i18n="proj.kraftonLogRationale">작업 단위를 나누면 일부 구간이 실패해도 전체를 다시 실행하지 않고 이어서 처리할 수 있습니다.</strong></article>
+                      <article><small data-i18n="decision.chosen">CHOSEN · 선택한 기술</small><strong data-i18n="proj.kraftonLogChosen">영상을 5분 구간으로 나눠 Map/Reduce로 처리하고, 청크 호출 재시도와 영상별 결과 즉시 저장을 넣었습니다.</strong></article>
+                      <article><small data-i18n="decision.rationale">RATIONALE · 선택 근거</small><strong data-i18n="proj.kraftonLogRationale">영상 안에서는 청크 오류를 다시 호출하고, 영상 사이에서는 완료 답을 보존해 전체 실행의 손실 범위를 줄였습니다.</strong></article>
                     </div>
                     <div class="decision-comparison-notes">
                       <p><span data-i18n="decision.tradeoffs">TRADE-OFFS · 대안별 장단점</span><strong data-i18n="proj.kraftonLogTradeoffs">단일 호출은 구현이 단순하고 전체 맥락을 유지하기 쉽습니다. 분할 처리는 재시도와 부분 저장에 유리하지만 구간 결과를 합칠 때 맥락이 빠질 수 있습니다.</strong></p>
@@ -462,7 +605,7 @@
       </div>
       <div class="project-grid collab-grid">
         <article class="project-card">
-          <img src="assets/projects/busan-eobo.webp" alt="부산어보 낚시 정보 서비스 콘셉트 이미지" loading="lazy" decoding="async">
+          <img src="assets/projects/busan-eobo-v2.webp" alt="부산어보 낚시 정보 서비스 콘셉트 이미지" loading="lazy" decoding="async">
           <div class="card-body">
             <div class="card-topline">
               <span class="type" data-i18n="collab.busanType">Hackathon · Service</span>
@@ -524,14 +667,14 @@
           </div>
         </article>
         <article class="project-card">
-          <img src="assets/projects/checkmate.webp" alt="CheckMate 계약서 분석 시스템 콘셉트 이미지" loading="lazy" decoding="async">
+          <img src="assets/projects/checkmate-v2.webp" alt="CheckMate 계약서 분석 시스템 콘셉트 이미지" loading="lazy" decoding="async">
           <div class="card-body">
             <div class="card-topline">
               <span class="type" data-i18n="collab.checkmateType">RAG Contract Analysis</span>
               <span class="status">Team</span>
             </div>
             <h3>CheckMate</h3>
-            <p data-i18n="collab.checkmateDesc">Azure OpenAI와 AI Search 기반 RAG로 계약서 독소조항을 검토하는 시스템입니다. Rule Engine이 명확한 위반을 먼저 처리하고, 모호한 조항만 LLM에 맡기도록 호출 범위와 근거 흐름을 설계했습니다.</p>
+            <p data-i18n="collab.checkmateDesc">Azure OpenAI와 AI Search 기반 RAG로 계약서를 검토하는 시스템입니다. 명시 조건은 Rule Engine으로 판정하고, 독소조항 후보와 실패 규칙의 설명에는 법령·판례 검색과 LLM을 연결했습니다.</p>
             <ul class="project-points">
               <li data-i18n="collab.checkmateP1">역할: PM·백엔드, OCR 좌표 기반 PII 마스킹과 법률 RAG 구현</li>
               <li data-i18n="collab.checkmateP2">선택: 명확한 판정은 Rule Engine, 해석이 필요한 조항은 LLM으로 분리</li>
@@ -552,16 +695,35 @@
                 </div>
                 <div class="detail-block">
                   <strong data-i18n="collab.checkmateArchH">아키텍처 구조</strong>
-                  <p data-i18n="collab.checkmateArch">프론트엔드에서 업로드된 계약 문서를 FastAPI 백엔드가 받아 Azure Document Intelligence로 텍스트와 좌표를 추출합니다. 이후 PII 마스킹, Rule Engine 기반 1차 검증, Azure AI Search RAG, Azure OpenAI 리포트 생성을 거쳐 사용자가 이해할 수 있는 분석 결과와 다국어 요약을 제공합니다.</p>
+                  <div class="architecture-map architecture-map--lanes" aria-label="CheckMate 계약서 분석 파이프라인">
+                    <div class="architecture-map-head">
+                      <span>SEQUENTIAL PIPELINE</span>
+                      <code>PipelineRunner.execute(steps)</code>
+                    </div>
+                    <div class="architecture-input-split">
+                      <section><small>LEASE</small><span data-i18n="flow.checkmate.lease">임대차계약서 + 등기부등본 + 시세</span></section>
+                      <section><small>LABOR</small><span data-i18n="flow.checkmate.labor">근로계약서</span></section>
+                    </div>
+                    <div class="architecture-track architecture-track--checkmate">
+                      <section class="architecture-node"><small>01 · INTAKE</small><h5 data-i18n="flow.checkmate.intake">검증·최적화·OCR·문서 분류</h5><ul><li>Document Intelligence</li><li data-i18n="flow.checkmate.coords">텍스트 + polygon 좌표</li></ul></section>
+                      <section class="architecture-node"><small>02 · NORMALIZE</small><h5 data-i18n="flow.checkmate.normalize">LLM 구조화</h5><ul><li>Contract · Registry</li><li>LaborContract schema</li></ul></section>
+                      <section class="architecture-node architecture-node--cluster"><small>03 · JUDGE</small><h5 data-i18n="flow.checkmate.judge">결정 규칙과 독소조항 검증</h5><div class="architecture-lanes"><div><b>Rule Engine</b><span data-i18n="flow.checkmate.explicit">명시 조건 판정</span></div><div><b>RAG + LLM</b><span data-i18n="flow.checkmate.toxic">후보 조항의 법령·판례 확인</span></div></div></section>
+                      <section class="architecture-node architecture-node--gate"><small>04 · PRIVACY</small><h5 data-i18n="flow.checkmate.privacy">PII를 OCR 좌표에 재매핑</h5><ul><li>Azure Language + custom regex</li><li data-i18n="flow.checkmate.mask">원문 위치 마스킹 박스</li></ul></section>
+                      <section class="architecture-node"><small>05 · EXPLAIN</small><h5 data-i18n="flow.checkmate.explain">실패 규칙별 근거 검색·조언</h5><ul><li>Azure AI Search</li><li>Azure OpenAI</li><li data-i18n="flow.checkmate.translate">선택 언어 번역</li></ul></section>
+                      <section class="architecture-node architecture-node--output"><small>06 · RENDER</small><h5 data-i18n="flow.checkmate.render">위험 위치가 표시된 결과 생성</h5><ul><li>masked PDF → Blob</li><li>summary · rules · URLs</li><li>analysis history</li></ul></section>
+                    </div>
+                    <p class="architecture-source"><span>SOURCE</span><code>analysis.py</code><code>pipeline.py</code><code>pii.py</code><code>rag.py</code><code>rule_engine.py</code></p>
+                  </div>
+                  <p data-i18n="collab.checkmateArch">FastAPI의 PipelineRunner가 임대차·근로 분석 단계를 순서대로 실행합니다. OCR과 스키마 정규화 뒤 규칙 판정과 독소조항 검증을 수행하고, PII를 원문 좌표에 다시 연결합니다. 실패 규칙의 근거를 검색해 설명한 뒤 마스킹 PDF와 다국어 결과를 생성합니다.</p>
                 </div>
                 <div class="detail-block">
                   <strong data-i18n="collab.checkmateDecisionH">기술 선택</strong>
-                  <p data-i18n="collab.checkmateDecision">개인정보를 원문 위치에서 가리려면 텍스트와 좌표가 모두 필요했습니다. 그래서 Azure Document Intelligence를 선택했습니다. 명확한 위반은 Rule Engine으로 처리하고, 해석이 필요한 조항만 LLM에 맡겼습니다. 비용 절감 효과는 수치로 확인하지 못했습니다.</p>
+                  <p data-i18n="collab.checkmateDecision">개인정보를 원문 위치에서 가리려면 텍스트와 좌표가 모두 필요해 Azure Document Intelligence를 선택했습니다. 명시 조건은 Rule Engine으로 재현 가능하게 판정하고, 독소조항 후보 검증과 실패 규칙 설명에는 RAG와 LLM을 사용했습니다. 비용 효과는 수치로 확인하지 못했습니다.</p>
                   <div class="decision-comparison">
                     <span class="decision-comparison-badge">DECISION LOG</span>
                     <div class="decision-comparison-summary">
                       <article><small data-i18n="decision.context">CONTEXT · 당시 조건</small><strong data-i18n="collab.checkmateLogContext">계약서에는 규칙으로 판정할 수 있는 명확한 위반과 문맥 해석이 필요한 조항이 함께 있었고, 개인정보는 원문 위치에서 가려야 했습니다.</strong></article>
-                      <article><small data-i18n="decision.chosen">CHOSEN · 선택한 기술</small><strong data-i18n="collab.checkmateLogChosen">Azure Document Intelligence로 텍스트와 좌표를 추출하고, Rule Engine이 명확한 위반을 처리한 뒤 RAG와 LLM이 해석이 필요한 조항을 분석하게 했습니다.</strong></article>
+                      <article><small data-i18n="decision.chosen">CHOSEN · 선택한 기술</small><strong data-i18n="collab.checkmateLogChosen">Document Intelligence로 텍스트와 좌표를 추출했습니다. 명시 조건은 Rule Engine으로 판정하고, 독소조항 후보와 실패 규칙은 RAG·LLM으로 검증하고 설명했습니다.</strong></article>
                       <article><small data-i18n="decision.rationale">RATIONALE · 선택 근거</small><strong data-i18n="collab.checkmateLogRationale">좌표 정보로 개인정보를 원문 위치에 다시 매핑할 수 있습니다. 규칙 판정과 LLM 해석을 분리하면 명확한 조항의 결과를 반복해서 확인하기 쉽습니다.</strong></article>
                     </div>
                     <div class="decision-comparison-notes">
@@ -587,7 +749,7 @@
         </article>
 
         <article class="project-card">
-          <img src="assets/projects/aira.webp" alt="Aira 음성 컴패니언 아키텍처 콘셉트 이미지" loading="lazy" decoding="async">
+          <img src="assets/projects/aira-v2.webp" alt="Aira 음성 컴패니언 아키텍처 콘셉트 이미지" loading="lazy" decoding="async">
           <div class="card-body">
             <div class="card-topline">
               <span class="type" data-i18n="collab.airaType">AI Voice Companion</span>
@@ -615,11 +777,39 @@
                 </div>
                 <div class="detail-block">
                   <strong data-i18n="collab.airaArchH">아키텍처 구조</strong>
-                  <p data-i18n="collab.airaArch">FastAPI WebSocket이 음성 대화의 중심 게이트웨이 역할을 하고, Gemini Native Audio가 실시간 응답을 생성합니다. Intent Router와 Orchestrator가 발화 의도를 분기하고, 필요할 때 서울 실시간 정보, TMAP/ODSay 교통, 뉴스, 날씨, 메모리 컨텍스트를 결합해 응답 품질을 높이는 구조입니다.</p>
+                  <div class="architecture-map architecture-map--aira" aria-label="Aira 음성 컴패니언 아키텍처">
+                    <div class="architecture-map-head">
+                      <span>REAL-TIME SYSTEM + CONTRIBUTION BOUNDARY</span>
+                      <code>modules PoC ↔ team runtime</code>
+                    </div>
+                    <div class="aira-boundary aira-boundary--mine">
+                      <b data-i18n="flow.aira.mine">내가 구현한 독립 모듈 PoC</b>
+                      <div class="aira-module-grid">
+                        <section><small>VOICE</small><h5>Azure Speech STT</h5><span>PCM Push Stream → callbacks</span></section>
+                        <section><small>VISION</small><h5>Azure OpenAI Vision</h5><span>Base64 → structured scene</span></section>
+                        <section><small>TOOL CALLING PoC</small><h5>Gemini Function Calling</h5><span>set_timer · capture_visual</span></section>
+                        <section><small>MEMORY</small><h5>Azure AI Search</h5><span>summary → embedding → vector search</span></section>
+                      </div>
+                    </div>
+                    <div class="architecture-bridge"><span data-i18n="flow.aira.contracts">입출력 계약을 검증한 뒤 팀 런타임에 연결</span></div>
+                    <div class="aira-boundary aira-boundary--team">
+                      <b data-i18n="flow.aira.team">팀 통합 런타임</b>
+                      <div class="architecture-track architecture-track--aira">
+                        <section class="architecture-node"><small>01 · SESSION</small><h5>Next.js → FastAPI WebSocket</h5><ul><li>token · location · audio</li></ul></section>
+                        <section class="architecture-node"><small>02 · TRANSCRIBE</small><h5>Azure STT</h5><ul><li>16kHz user PCM</li><li>dedupe · speech window</li></ul></section>
+                        <section class="architecture-node architecture-node--gate"><small>03 · ROUTE</small><h5 data-i18n="flow.aira.route">빠른 규칙 → GPT Intent Router</h5><ul><li data-i18n="flow.aira.routerModel">Azure OpenAI · 기본 GPT-4o mini</li><li>JSON: intent · destination · timer</li><li>error → keyword fallback</li></ul></section>
+                        <section class="architecture-node architecture-node--cluster"><small>04 · CONTEXT</small><h5 data-i18n="flow.aira.live">의도에 필요한 실시간 컨텍스트</h5><div class="architecture-lanes"><div><b>Transit</b><span>TMAP · ODsay</span></div><div><b>Environment</b><span>weather · air</span></div><div><b>State</b><span>news · vision · timer</span></div></div></section>
+                        <section class="architecture-node"><small>05 · GUARD</small><h5 data-i18n="flow.aira.guard">이전 오디오 차단·컨텍스트 주입</h5><ul><li>response guard</li><li>context dedupe</li></ul></section>
+                        <section class="architecture-node architecture-node--output"><small>06 · RESPOND</small><h5>Gemini Native Audio</h5><ul><li>audio → WebSocket</li><li data-i18n="flow.aira.save">세션 종료 후 Cosmos 메모리 저장</li></ul></section>
+                      </div>
+                    </div>
+                    <p class="architecture-source"><span>SOURCE</span><code>3rd_Project_Modules/*</code><code>backend/server.py</code><code>intent_router.py</code><code>ws_orchestrator_service.py</code></p>
+                  </div>
+                  <p data-i18n="collab.airaArch">개인 모듈 저장소에서는 Gemini의 set_timer·capture_visual 도구 호출을 독립 PoC로 만들었습니다. 팀 백엔드의 실행 경로는 별개입니다. 빠른 규칙이 먼저 발화를 분류하고, 결정되지 않은 요청은 GPT Intent Router가 JSON intent로 변환합니다. 선택된 실시간 컨텍스트를 주입한 뒤 Gemini Native Audio가 응답합니다.</p>
                 </div>
                 <div class="detail-block">
                   <strong data-i18n="collab.airaDecisionH">기술 선택</strong>
-                  <p data-i18n="collab.airaDecision">STT·도구·메모리를 먼저 독립 모듈로 만들었습니다. 전체 서비스를 띄우기 전 각 기능의 입력·출력과 실패 처리를 확인할 수 있었습니다. 통합 단계에서는 Intent Router로 기능을 나눠 한 모듈의 오류가 전체 대화를 멈추지 않도록 했습니다.</p>
+                  <p data-i18n="collab.airaDecision">Gemini Tool Calling은 모델이 대화 중 동작을 요청하는 PoC로 만들었습니다. 서비스 라우팅은 서버가 통제하도록 분리했습니다. 명확한 발화는 빠른 규칙으로 처리하고, 나머지는 GPT가 제한된 intent JSON으로 분류해 실행 범위를 고정했습니다.</p>
                   <div class="decision-comparison">
                     <span class="decision-comparison-badge">DECISION LOG</span>
                     <div class="decision-comparison-summary">

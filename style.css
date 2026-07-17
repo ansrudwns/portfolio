@@ -1295,6 +1295,8 @@ body.modal-open {
   width: min(1080px, calc(100vw - 2rem));
   border-radius: 3px;
   background: var(--bg);
+  line-break: strict;
+  word-break: keep-all;
 }
 
 .project-modal-shell {
@@ -1310,10 +1312,12 @@ body.modal-open {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: clamp(1rem, 2vw, 1.35rem);
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .project-modal-body {
   padding: 1rem;
+  scrollbar-gutter: stable;
 }
 
 .project-console {
@@ -1397,18 +1401,6 @@ body.modal-open {
   color: #d8e2d8;
   font-size: 0.7rem;
   line-height: 1.45;
-}
-
-.project-console-scan {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 2;
-  height: 1px;
-  background: var(--accent);
-  box-shadow: 0 0 18px 2px color-mix(in srgb, var(--accent) 68%, transparent);
-  animation: project-scan 3.8s ease-in-out infinite;
 }
 
 .project-console-trace {
@@ -1518,6 +1510,8 @@ body.modal-open {
   color: var(--text);
   font-size: 0.9rem;
   line-height: 1.55;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }
 
 .project-console-panel {
@@ -1534,18 +1528,28 @@ body.modal-open {
 }
 
 .project-console-panel-title {
+  max-width: 30ch;
   margin: 0.45rem 0 0.65rem;
   font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
 .project-console-panel-content {
   color: var(--muted);
-  font-size: 0.92rem;
-  line-height: 1.75;
+  font-size: clamp(0.9rem, 1.15vw, 0.98rem);
+  line-height: 1.82;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }
 
 .project-console-panel-content p {
   margin: 0;
+}
+
+.project-console-panel-content > .detail-block > p,
+.project-console-panel-content > .detail-evidence {
+  max-width: 72ch;
 }
 
 .project-console-panel-content > .detail-block {
@@ -1555,6 +1559,347 @@ body.modal-open {
 
 .project-console-panel-content code {
   color: var(--accent);
+  white-space: normal;
+  word-break: break-word;
+}
+
+.architecture-map {
+  position: relative;
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px),
+    color-mix(in srgb, var(--surface-strong) 86%, transparent);
+  background-size: 24px 24px;
+}
+
+.architecture-map::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent-2) 75%, var(--accent)));
+}
+
+.architecture-map-head,
+.architecture-source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.7rem;
+  margin: 0;
+}
+
+.architecture-map-head {
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.architecture-map-head span,
+.architecture-source span,
+.architecture-lane-row > b,
+.aira-boundary > b {
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+}
+
+.architecture-map-head code,
+.architecture-source code {
+  padding: 0.2rem 0.36rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
+  background: color-mix(in srgb, var(--bg) 74%, transparent);
+  color: var(--soft);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.54rem;
+  overflow-wrap: anywhere;
+}
+
+.architecture-track,
+.architecture-lane-track {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.architecture-track--rock,
+.architecture-track--mwd {
+  grid-template-columns: 0.9fr 0.95fr 1.35fr 0.95fr 0.9fr;
+}
+
+.architecture-track--checkmate,
+.architecture-track--aira {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.architecture-lane-track--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.architecture-lane-track--5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.architecture-lane-track--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.architecture-lane-stack {
+  display: grid;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.architecture-node {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.48rem;
+  min-width: 0;
+  min-height: 8.6rem;
+  padding: 0.72rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 91%, transparent);
+  box-shadow: inset 0 2px 0 color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.architecture-track > .architecture-node:not(:last-child)::after,
+.architecture-lane-track > .architecture-node:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  right: -0.58rem;
+  z-index: 3;
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  transform: translate(50%, -50%);
+}
+
+.architecture-node small,
+.aira-module-grid small,
+.architecture-input-split small {
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.architecture-node h5,
+.aira-module-grid h5 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
+.architecture-node ul {
+  display: grid;
+  gap: 0.22rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.architecture-node li,
+.aira-module-grid span,
+.architecture-input-split span {
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.55rem;
+  line-height: 1.45;
+  line-break: auto;
+  overflow-wrap: break-word;
+  word-break: keep-all;
+}
+
+.architecture-node li::before {
+  content: "·";
+  margin-right: 0.25rem;
+  color: var(--accent);
+}
+
+.architecture-node--cluster {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+}
+
+.architecture-node--gate {
+  border-color: color-mix(in srgb, var(--accent-2) 60%, var(--line));
+  box-shadow: inset 0 2px 0 color-mix(in srgb, var(--accent-2) 76%, transparent);
+}
+
+.architecture-node--gate small {
+  color: var(--accent-2);
+}
+
+.architecture-node--handoff {
+  border-style: dashed;
+}
+
+.architecture-node--output {
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--line));
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.architecture-lanes {
+  display: grid;
+  gap: 0.32rem;
+}
+
+.architecture-lanes > div {
+  display: grid;
+  gap: 0.12rem;
+  padding: 0.38rem 0.42rem;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 56%, var(--line));
+  background: color-mix(in srgb, var(--bg) 50%, transparent);
+}
+
+.architecture-lanes b {
+  color: var(--text);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.56rem;
+}
+
+.architecture-lanes span {
+  color: var(--muted);
+  font-size: 0.52rem;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+.architecture-source {
+  padding-top: 0.72rem;
+  border-top: 1px solid var(--line);
+}
+
+.architecture-lane-row {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 0.72rem;
+  align-items: stretch;
+}
+
+.architecture-lane-row > b {
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.architecture-lane-row--local {
+  padding-top: 0.85rem;
+  border-top: 1px dashed color-mix(in srgb, var(--accent) 32%, var(--line));
+}
+
+.architecture-loop-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.65rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px dashed color-mix(in srgb, var(--accent-2) 48%, var(--line));
+  background: color-mix(in srgb, var(--accent-2) 6%, transparent);
+}
+
+.architecture-loop-note b,
+.architecture-loop-note code {
+  color: var(--accent-2);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.52rem;
+}
+
+.architecture-loop-note span {
+  flex: 1 1 18rem;
+  color: var(--soft);
+  font-size: 0.6rem;
+  line-height: 1.4;
+}
+
+.architecture-input-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.architecture-input-split section {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px dashed color-mix(in srgb, var(--accent) 34%, var(--line));
+  background: color-mix(in srgb, var(--bg) 45%, transparent);
+}
+
+.aira-boundary {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.75rem;
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: color-mix(in srgb, var(--bg) 38%, transparent);
+}
+
+.aira-boundary--team {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--accent-2) 38%, var(--line));
+}
+
+.aira-module-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.aira-module-grid section {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0.62rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+
+.architecture-bridge {
+  position: relative;
+  display: grid;
+  min-height: 2rem;
+  place-items: center;
+}
+
+.architecture-bridge::before {
+  content: "↓";
+  position: absolute;
+  top: -0.32rem;
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.architecture-bridge span {
+  padding: 0.26rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  background: var(--bg);
+  color: var(--soft);
+  font-size: 0.62rem;
+  line-height: 1.4;
+  text-align: center;
 }
 
 .project-console-actions {
@@ -1614,7 +1959,9 @@ body.modal-open {
   display: block;
   color: var(--text);
   font-size: 0.82rem;
-  line-height: 1.55;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }
 
 .decision-comparison-validated {
@@ -1652,12 +1999,16 @@ body.modal-open {
   margin: 0.45rem 0 0.55rem;
   color: var(--text);
   font-size: 0.88rem;
+  line-height: 1.45;
+  text-wrap: balance;
 }
 
 .decision-comparison-grid p {
   color: var(--muted);
   font-size: 0.78rem;
-  line-height: 1.6;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }
 
 .decision-comparison-notes {
@@ -1687,12 +2038,37 @@ body.modal-open {
   color: var(--text);
   font-size: 0.78rem;
   font-weight: 700;
-  line-height: 1.55;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }
 
-@keyframes project-scan {
-  0%, 100% { top: 8%; opacity: 0.35; }
-  50% { top: 92%; opacity: 0.9; }
+@media (max-width: 960px) and (min-width: 761px) {
+  .project-modal {
+    width: min(920px, calc(100vw - 1.25rem));
+  }
+
+  .project-console-hero {
+    grid-template-columns: minmax(0, 1.15fr) minmax(230px, 0.85fr);
+  }
+
+  .architecture-track--rock,
+  .architecture-track--mwd,
+  .architecture-track--checkmate,
+  .architecture-track--aira,
+  .architecture-lane-track--4,
+  .architecture-lane-track--5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .architecture-track > .architecture-node:not(:last-child)::after,
+  .architecture-lane-track > .architecture-node:not(:last-child)::after {
+    display: none;
+  }
+
+  .architecture-node {
+    min-height: 0;
+  }
 }
 
 @media (max-width: 760px) {
@@ -1738,11 +2114,36 @@ body.modal-open {
   .decision-comparison-grid article {
     min-height: 0;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .project-console-scan {
-    animation: none;
+  .architecture-track,
+  .architecture-lane-track,
+  .aira-module-grid,
+  .architecture-input-split {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-node {
+    min-height: 0;
+  }
+
+  .architecture-track > .architecture-node:not(:last-child)::after,
+  .architecture-lane-track > .architecture-node:not(:last-child)::after {
+    content: "↓";
+    top: auto;
+    right: auto;
+    bottom: -0.64rem;
+    left: 1rem;
+    transform: translate(-50%, 50%);
+  }
+
+  .architecture-lane-row {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-lane-row > b {
+    min-height: 1.8rem;
+    writing-mode: horizontal-tb;
+    transform: none;
   }
 }
 
